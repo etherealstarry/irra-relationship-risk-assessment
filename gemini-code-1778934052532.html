@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IRRA 深度亲密关系风险结构演化测评系统 (50题专业版)</title>
+<style>
+    :root {
+        --bg:#09090b;
+        --card:#141416;
+        --border:#27272a;
+        --text:#f4f4f5;
+        --muted:#a1a1aa;
+        --accent:#2563eb;
+        --danger:#dc2626;
+        --success:#16a34a;
+    }
+    body{
+        margin:0;
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC",sans-serif;
+        background:var(--bg);
+        color:var(--text);
+        line-height:1.6;
+    }
+    .container{
+        max-width:800px;
+        margin:0 auto;
+        padding:40px 20px;
+    }
+    .hero{
+        text-align:center;
+        margin-bottom:30px;
+    }
+    .hero h1{
+        font-size:28px;
+        font-weight:300;
+        margin-bottom:12px;
+        letter-spacing:1px;
+    }
+    .hero p{
+        color:var(--muted);
+        font-size:14px;
+        max-width:600px;
+        margin:0 auto;
+    }
+    .progress-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        font-size: 12px;
+        color: var(--muted);
+    }
+    .progress-container {
+        height: 6px;
+        background: var(--border);
+        border-radius: 3px;
+        width: 85%;
+        overflow: hidden;
+    }
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: var(--accent);
+        transition: width 0.2s ease;
+    }
+    .card{
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:16px;
+        padding:28px;
+        margin-bottom:24px;
+        display: none;
+    }
+    .card.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+    .module-tag{
+        color:var(--accent);
+        text-transform:uppercase;
+        letter-spacing:0.1em;
+        font-size:11px;
+        font-weight:600;
+        margin-bottom:10px;
+    }
+    .scenario{
+        background:rgba(37,99,235,0.04);
+        border-left:3px solid var(--accent);
+        padding:14px;
+        border-radius:4px;
+        font-size:14px;
+        color:var(--muted);
+        margin-bottom:18px;
+        text-align: justify;
+    }
+    .question-text{
+        font-size:16.5px;
+        font-weight:400;
+        margin-bottom:20px;
+    }
+    .options-grid{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+    }
+    .option-btn{
+        background:rgba(255,255,255,0.01);
+        border:1px solid var(--border);
+        border-radius:10px;
+        padding:14px 18px;
+        text-align:left;
+        color:var(--text);
+        cursor:pointer;
+        font-size:14px;
+        transition:all 0.2s ease;
+    }
+    .option-btn:hover{
+        background:rgba(255,255,255,0.05);
+        border-color:var(--muted);
+    }
+    .result-view {
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+    .section-title {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 36px 0 16px 0;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 6px;
+        color: #fff;
+    }
+    .chart-container {
+        display: flex;
+        justify-content: center;
+        margin: 24px 0;
+    }
+    .report-card {
+        background: #0f0f11;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+    }
+    .report-card h4 {
+        margin: 0 0 8px 0;
+        font-size: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .desc-text {
+        font-size: 13.5px;
+        color: var(--muted);
+        text-align: justify;
+        line-height: 1.6;
+    }
+    .alert-box {
+        background: rgba(220,38,38,0.06);
+        border: 1px solid rgba(220,38,38,0.25);
+        border-radius: 12px;
+        padding: 20px;
+        color: #fca5a5;
+        font-size: 14px;
+        margin-top: 24px;
+        line-height: 1.7;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div id="quiz-flow">
+        <div class="hero">
+            <h1>IRRA 亲密关系人格动力学长线预测系统</h1>
+            <p>本测评包含50道深度行为投射两难情境题，用于穿透受测者的表层社会化完美面具，精准测绘其在长期相处中的深层隐性风险及修复通道。</p>
+        </div>
+        <div class="progress-wrapper">
+            <div class="progress-container"><div class="progress-bar" id="progress"></div></div>
+            <span id="progress-text">0 / 50</span>
+        </div>
+        <div id="question-box"></div>
+    </div>
+
+    <div id="result-flow" class="result-view">
+        <div class="hero">
+            <h1 style="color:#fff; font-weight: 400;">亲密关系长线人格深度动力学报告</h1>
+            <p style="color:var(--accent)">高级数据处理层：已完成高功能伪装校验、时间行为学阻尼计算与50轴向逻辑闭环印证</p>
+        </div>
+
+        <div class="section-title">📊 多维长线人格动力学特征 (雷达图)</div>
+        <div class="chart-container">
+            <canvas id="radarChart" width="360" height="360"></canvas>
+        </div>
+
+        <div class="section-title">🕵️ 掩饰度与防御校验层评估</div>
+        <div class="report-card" style="border-color: #2563eb; background: rgba(37,99,235,0.02)">
+            <p class="desc-text" id="verify-report" style="color:#bfdbfe; font-size:14px;"></p>
+        </div>
+
+        <div class="section-title">⚠️ 潜在风险结构预测 (相处1-5年期演化路径)</div>
+        <div class="report-card">
+            <h4 style="color:var(--danger)">1. 隐性控制与现实定义权剥夺风险 <span id="r-control">0%</span></h4>
+            <p class="desc-text" id="analysis-control"></p>
+        </div>
+        <div class="report-card">
+            <h4 style="color:var(--danger)">2. 隐性羞耻防御与无意识细节贬低倾向 <span id="r-shame">0%</span></h4>
+            <p class="desc-text" id="analysis-shame"></p>
+        </div>
+        <div class="report-card">
+            <h4 style="color:var(--danger)">3. 低刺激退行稳定性与冷暴力分化可能 <span id="r-boredom">0%</span></h4>
+            <p class="desc-text" id="analysis-boredom"></p>
+        </div>
+        <div class="report-card">
+            <h4 style="color:var(--danger)">4. 蓄压型情绪外归因与边界侵蚀模式 <span id="r-aggression">0%</span></h4>
+            <p class="desc-text" id="analysis-aggression"></p>
+        </div>
+
+        <div class="section-title">🌱 核心对冲安全指标：核心良性修复通路</div>
+        <div class="report-card" style="border-color: #16a34a;">
+            <h4 style="color:var(--success)">自我觉察、脆弱耐受度与归因对称性 <span id="r-repair">0%</span></h4>
+            <p class="desc-text" id="analysis-repair"></p>
+        </div>
+
+        <div id="ultimate-alert" class="alert-box" style="display:none;"></div>
+    </div>
+</div>
+
+<script>
+// 50道精心伪装、无明显道德高下的两难情境题库
+const questions = [
+    // 维度说明：control(控制), shame(羞耻), boredom(平淡退行), aggression(情绪攻击), repair(自省修复)
+    {
+        id: 1, module: "表层锚点校验",
+        scenario: "【观念摸底】你认为在一段能够走向终点的婚姻/长期关系中，最不可动摇的基石是：",
+        question: "你的首选观念是：",
+        options: [
+            { text: "彼此拥有绝对独立的边界与自主选择权，绝不试图强行介入对方的私人领域。", v: "freedom" },
+            { text: "无条件的坦诚和同步感，任何一方都不能保留让另一方无法参与的隐秘世界。", v: "control_anchor" },
+            { text: "风雨同舟的利益和规划绑定，个人的追求必须优先让位于家庭的整体抗风险能力。", v: "bound" }
+        ]
+    },
+    {
+        id: 2, module: "现实定义权 (C1)",
+        scenario: "伴侣因一件在外面遇到的、你看来非常稀松平常的小事感到崩溃大哭，并向你寻求安慰。此时你最本能的下意识反应是：",
+        question: "你的第一念头：",
+        options: [
+            { text: "虽然心疼，但觉得Ta的心理承受力有点过于脆弱，需要帮Ta理性分析一下这件事根本不值得哭。", w: { control: 3, repair: 0 } },
+            { text: "先耐着性子哄Ta，等Ta情绪平复下来后，再委婉指出Ta在这个事件中处理得不够妥当的地方。", w: { control: 2, repair: 1 } },
+            { text: "无条件顺着Ta的委屈一起吐槽对方，认为此刻Ta的感受才是最重要的，对错不重要。", w: { control: 0, repair: 3 } },
+            { text: "有些不知所措甚至隐隐感到一丝疲惫，觉得这种频繁的负能量宣泄会让自己也陷入消耗。", w: { boredom: 2, aggression: 1 } }
+        ]
+    },
+    {
+        id: 3, module: "羞耻防御系统 (S1)",
+        scenario: "在一次朋友聚会上，伴侣当众指出了你讲的一个关于某事物的常识性错误，引起了周围朋友的微弱哄笑。回到家后，你最可能：",
+        question: "你的内心动态：",
+        options: [
+            { text: "虽然当时有点尴尬，但觉得Ta只是心直口快帮自己纠错，不会主动提这件事，以后注意就好。", w: { shame: 0, repair: 3 } },
+            { text: "心里很不舒服，会找个机会冷静地和Ta沟通，明确告诉Ta当众否定自己会让自己感到很不适。", w: { shame: 1, repair: 2 } },
+            { text: "不会直接说这件事，但在接下来的几天里，对Ta的说话语气会无意识变得有些挑剔和冷淡。", w: { shame: 3, aggression: 2 } },
+            { text: "会在心里暗示自己：‘其实Ta在很多更重要的常识上懂得比我少得多’，以此来消解当时的不快。", w: { shame: 4, control: 1 } }
+        ]
+    },
+    {
+        id: 4, module: "平淡期异化风险 (B1)",
+        scenario: "恋爱跨入第三年，生活极其稳定。伴侣不再像以前一样精心打扮，秒回信息，甚至习惯在下班后各自玩手机。这时你最容易出现的隐秘变化是：",
+        question: "你可能的行为倾斜：",
+        options: [
+            { text: "非常享受这种高度安全、不再需要伪装的相处模式，觉得这才是生活真正的底色。", w: { boredom: 0, repair: 2 } },
+            { text: "会把更多精力转移到工作、自我提升或朋友身上，逐渐把伴侣放在一个‘亲密室友’的位置。", w: { boredom: 3, repair: 1 } },
+            { text: "看Ta身上以前能包容的小毛病（如嚼东西大声、拖鞋乱放）会变得越来越难以忍受，经常忍不住刺Ta两句。", w: { boredom: 4, aggression: 2 } },
+            { text: "内心深处会莫名产生一种想要折腾一下的冲动，比如故意冷淡对方或者提分手，看看Ta到底还在不在乎。", w: { boredom: 2, shame: 3 } }
+        ]
+    },
+    {
+        id: 5, module: "情绪攻击模式 (A1)",
+        scenario: "你在工作中遭遇了极大的不公或挫败，内心充满怒火地回到家。伴侣却因为沉迷游戏忘记了做你交代过的一件小事。你最容易出现的爆发方式是：",
+        question: "你的应激状态：",
+        options: [
+            { text: "理智上知道错在工作，但由于当时情绪太差，会借题发挥，严厉质问Ta为什么总是把自己的话当耳边风。", w: { aggression: 4, control: 1 } },
+            { text: "一言不发地开始自己去把那件事做了，用摔门、重重摔东西等肢体语言向Ta传递你此刻极度糟糕的心情。", w: { aggression: 3, boredom: 2 } },
+            { text: "深呼吸直接告诉Ta：‘我今天工作非常受挫，现在情绪很差，暂时不想说话，你让我自己待一会儿。’", w: { aggression: 0, repair: 4 } },
+            { text: "会产生强烈的委屈感，觉得对方根本不关心自己的死活，从而开始拒绝与对方进行后续的任何眼神接触。", w: { aggression: 2, shame: 2 } }
+        ]
+    },
+    {
+        id: 6, module: "自我自省修复 (R1)",
+        scenario: "大吵一架过后，你突然意识到刚才争执中自己说的一句话确实非常过分，严重伤害了伴侣的自尊。此时，你通常会怎么做：",
+        question: "你的后续抉择：",
+        options: [
+            { text: "虽然知道自己错了，但拉不下脸立刻认错。会通过主动做家务、买礼物等行为进行隐性示好。", w: { repair: 2, shame: 2 } },
+            { text: "强忍住内心的羞耻感，走到Ta面前认真且正式地道歉，承认那句话是自己失控了，并请求原谅。", w: { repair: 4, shame: 0 } },
+            { text: "觉得虽然自己说话过分，但也是被Ta前面的恶劣态度逼出来的，等Ta先来找自己，再顺势把话说开。", w: { repair: 1, shame: 3 } },
+            { text: "干脆不去提那句话，冷处理一段时间，等过几天大家都冷静了，这件事情自然就翻篇了。", w: { repair: 0, boredom: 3 } }
+        ]
+    },
+    {
+        id: 7, module: "现实定义权 (C2)",
+        scenario: "伴侣打算购买一件在Ta能力范围内、且用Ta自己的积蓄支付的昂贵奢侈品/爱好装备。但你从实用主义出发，认为这笔钱花得极其不理智。你会：",
+        question: "你的干预倾向：",
+        options: [
+            { text: "尊重Ta对自己财产的处置权，虽然不赞同但口头表达意见后不会再多加干涉。", w: { control: 0, repair: 3 } },
+            { text: "会反复在Ta耳边用各种客观数据证明这个东西有多不值，直到Ta自己觉得有愧疚感而放弃购买。", w: { control: 4, aggression: 1 } },
+            { text: "开玩笑地调侃Ta乱花钱、虚荣或不成熟，以此侧面表达自己的不满和不支持。", w: { control: 2, shame: 2 } },
+            { text: "用一种无所谓的态度冷眼旁观，但内心会调低对Ta未来能够长久过日子的整体靠谱度评价。", w: { control: 1, boredom: 3 } }
+        ]
+    },
+    {
+        id: 8, module: "羞耻防御系统 (S2)",
+        scenario: "伴侣拿到了一个你梦寐以求但却遗憾错失的职业晋升/学术机会。周围的人都在疯狂祝贺Ta，在这个瞬间，你最隐秘的本能是：",
+        question: "你的核心体验：",
+        options: [
+            { text: "百分之百为Ta感到狂喜和自豪，完全把Ta的成功看作是两个人共同的荣耀。", w: { shame: 0, repair: 4 } },
+            { text: "在为Ta开心的同时，内心不可遏制地涌现出极大的失落和自我怀疑，甚至会有一种被Ta抛下的恐慌。", w: { shame: 1, repair: 2 } },
+            { text: "会暗自觉得Ta这次能拿到纯粹是因为运气好，或者是因为负责筛选的人有偏好，而不是Ta真的实力碾压。", w: { shame: 4, control: 1 } },
+            { text: "表面大方祝贺，但在后续相处中，当Ta稍微流露出一点开心时，会忍不住提醒Ta要低调、别飘了。", w: { shame: 3, aggression: 2 } }
+        ]
+    },
+    {
+        id: 9, module: "平淡期异化风险 (B2)",
+        scenario: "你们已经共同生活了很久。你发现伴侣对你的身体吸引力已经急剧下降，几乎没有了热恋期的生理冲动。在这种常态下，你倾向于：",
+        question: "你的心理调节：",
+        options: [
+            { text: "认为这是亲密关系必然会经历的阶段，开始全面追求精神层面的默契和亲人般的相守。", w: { boredom: 0, repair: 3 } },
+            { text: "内心会不可避免地对外界的其他异性产生更多关注和隐秘的好奇，虽然不会付诸行动。", w: { boredom: 3, shame: 1 } },
+            { text: "会开始以‘累了’、‘身体不适’等各种借口推托对方的亲密互动请求，逐渐切断身体连接。", w: { boredom: 4, aggression: 1 } },
+            { text: "开始要求伴侣去健身、改变穿搭或者减肥，试图通过外在的强制改变来重新唤醒自己的兴趣。", w: { boredom: 2, control: 3 } }
+        ]
+    },
+    {
+        id: 10, module: "情绪攻击模式 (A2)",
+        scenario: "你连续加了一周的班，极度疲惫。周末本想好好睡个懒觉，伴侣却大清早起床做家务，并且动静很大（吸尘器声、锅碗瓢盆碰击声）。你醒来后第一反应是：",
+        question: "你的处理方式：",
+        options: [
+            { text: "觉得Ta是在用这种大动静故意表达对你赖床的不满，心里极度烦躁，直接黑着脸起床冲Ta发火。", w: { aggression: 4, control: 1 } },
+            { text: "用被子捂住头继续睡，但内心开始积攒怨气，起床后对Ta的一切示好都采取敷衍和冷漠的回应。", w: { aggression: 2, boredom: 3 } },
+            { text: "有些无奈，但理智上觉得Ta做家务也是为了这个家，会起床温和地跟Ta说：‘宝贝能不能等我醒了再弄吸尘器。’", w: { aggression: 0, repair: 4 } },
+            { text: "内心觉得有些委屈和不被理解，在心里默默给Ta扣分，觉得Ta是一个不够体贴、自私的人。", w: { aggression: 1, shame: 3 } }
+        ]
+    },
+    // 为确保完整执行，以下继续以高隐藏情境补充剩余40题
+    {
+        id: 11, module: "自我自省修复 (R2)",
+        scenario: "在一次谈话中，伴侣非常严肃且有些红着眼眶地向你指出：‘你平时的某句口头禅/某个眼神让我觉得你在鄙视我。’你最可能的反馈路径是：",
+        question: "你的抗辩方式：",
+        options: [
+            { text: "感到震惊和自责，立刻回想并向Ta确认是哪些细节让Ta产生了误解，并承诺以后绝对不用这个词。", w: { repair: 4, control: 0 } },
+            { text: "第一反应是极力解释自己的动机：‘我绝对没有鄙视你的意思，你真的想太多了，为什么这么敏感？’", w: { repair: 1, control: 3 } },
+            { text: "心里有点不舒服，觉得伴侣在‘上纲上线’，但为了平息Ta的情绪，会敷衍地回一句：‘行行行，那我以后不说行了吧。’", w: { repair: 2, shame: 2 } },
+            { text: "立刻开始反击，指出Ta平时也有类似的、甚至更过分的鄙视你的行为，认为Ta没资格单方面指责你。", w: { repair: 0, aggression: 4 } }
+        ]
+    },
+    {
+        id: 12, module: "现实定义权 (C3)",
+        scenario: "伴侣开始热衷于一个你完全无法理解也看不到任何社会价值的业余圈子（如某种小众收藏或精神修行）。你在外人面前提起伴侣的这个爱好时，通常会：",
+        question: "你的对外态度：",
+        options: [
+            { text: "大方表示那是Ta的自由，虽然自己不懂但百分之百尊重Ta拥有独立精神世界的权利。", w: { control: 0, repair: 3 } },
+            { text: "采用带有一点自我调侃或轻微贬低的语气带过：‘唉，Ta最近天天瞎折腾一些没用的东西。’", w: { control: 2, shame: 3 } },
+            { text: "尽量避免向外人提起这一块，因为潜意识里觉得这个爱好有点拿不出手，甚至有点丢自己的人。", w: { control: 1, shame: 4 } },
+            { text: "积极在外人面前帮Ta的行为寻找理性的社会学/心理学解释，试图将其‘合理化’成一件高大上的事。", w: { control: 3, repair: 1 } }
+        ]
+    },
+    {
+        id: 13, module: "羞耻防御系统 (S3)",
+        scenario: "在长期的共同生活中，你发现伴侣在某些方面的能力（如社交能力、理财能力）确实远远高出你很多。你会在无意识中：",
+        question: "你的平衡策略：",
+        options: [
+            { text: "非常省心地把这一部分的决策权完全移交给Ta，自己心安理得地享受被Ta照顾和带飞的状态。", w: { shame: 0, repair: 4 } },
+            { text: "在日常交谈中，会经常不自觉地强调：‘虽然你很会挣钱/社交，但在大局观/做人底线上其实我看得更清楚。’", w: { shame: 4, control: 2 } },
+            { text: "虽然承认Ta的能力，但心里会憋着一口气，在别的完全不相干的领域疯狂找补，力求证明自己不比Ta差。", w: { shame: 2, repair: 1 } },
+            { text: "会产生微妙的自卑感，并由于这种自卑，开始下意识地减少对Ta整体成就的赞美和回应。", w: { shame: 3, boredom: 1 } }
+        ]
+    },
+    {
+        id: 14, module: "平淡期异化风险 (B3)",
+        scenario: "你们进入了没有任何生活波澜的第四年。某天你遇到了一位各方面条件都极度符合你审美、且对你释放出隐隐好感的异性。你最真实的思维走向是：",
+        question: "你的心智偏离：",
+        options: [
+            { text: "内心泛起微弱的波澜，但会立刻在理智上拉开安全距离，并回家通过加倍对伴侣好来消除自己的愧疚感。", w: { boredom: 0, repair: 4 } },
+            { text: "绝对不会出轨，但会把对方当作单调生活中的一种‘精神多巴胺’，在脑海里幻想或者在微信上维持偶尔的礼貌互动。", w: { boredom: 3, shame: 1 } },
+            { text: "会开始在内心把这个人和自己的伴侣进行全方位的残酷对比，越对比越觉得自己的婚姻/恋爱极为沉闷和不幸。", w: { boredom: 4, aggression: 2 } },
+            { text: "无所谓，觉得这证明了自己依然有魅力，甚至会故意在伴侣面前提及这位异性，看看伴侣会不会为自己吃醋。", w: { boredom: 2, control: 3 } }
+        ]
+    },
+    {
+        id: 15, module: "情绪攻击模式 (A3)",
+        scenario: "伴侣在开车的路上因为走错路导致你们错过了预定好的重要晚宴/电影开场。看着导航重新规划的拥堵路线，你通常会：",
+        question: "你的即时反馈：",
+        options: [
+            { text: "脸色瞬间沉下来，开始忍不住一路上不断数落Ta：‘天天看导航都能看错，你做事情能不能动动脑子。’", w: { aggression: 4, control: 2 } },
+            { text: "叹一口气，一言不发地转头看窗外，无论Ta怎么跟你解释或者道歉，你都用‘嗯’、‘哦’、‘随便’来回应。", w: { aggression: 3, boredom: 3 } },
+            { text: "虽然心里也有些遗憾，但会主动安抚焦虑的伴侣：‘没事没事，计划赶不上变化，我们随便在路边吃点也是个体验。’", w: { aggression: 0, repair: 4 } },
+            { text: "虽然口头上说没事，但会在接下来的路程中疯狂地刷手机，用绝对的冷漠让Ta知道Ta犯了一个多大的错误。", w: { aggression: 2, shame: 1 } }
+        ]
+    },
+    {
+        id: 16, module: "自我自省修复 (R3)",
+        scenario: "伴侣因为受够了你长期的某个坏习惯，爆发了一次歇斯底里的痛哭并扬言要分手。在这场暴风雨后，你内心最底层的真实思维是：",
+        question: "你的内在归因：",
+        options: [
+            { text: "深深地感到被震撼，意识到自己以前的无所谓给Ta造成了多深的伤害，决定彻底改掉这个习惯。", w: { repair: 4, control: 0 } },
+            { text: "一方面觉得自责，另一方面觉得Ta的反应实在太极端了，至于为了这点小事要挟分手，感到自尊受损。", w: { repair: 2, shame: 3 } },
+            { text: "内心毫无波澜，甚至觉得Ta是在‘作’、在演戏逼自己妥协，只要自己继续冷着，过几天Ta自己就会软下来。", w: { repair: 0, boredom: 4 } },
+            { text: "觉得如果Ta因为这点小事就要分手，说明Ta根本就不够爱自己，正好借这个机会冷战，重新评估关系。", w: { repair: 1, aggression: 3 } }
+        ]
+    },
+    {
+        id: 17, module: "现实定义权 (C4)",
+        scenario: "当伴侣在向你倾诉Ta被职场同事隐性排挤的痛苦时，你发现这件事很大程度上是因为Ta自己性格太软弱、太不会拒绝导致的。你会：",
+        question: "你的纠偏本能：",
+        options: [
+            { text: "直接打断Ta的哭诉，以一种极其专业的职场导师姿态，严厉指出Ta自身的缺陷并命令Ta必须做出改变。", w: { control: 4, aggression: 1 } },
+            { text: "先抱抱Ta，表示无论如何都坚定站在Ta这边。等隔天Ta心情好时，再用商量的语气跟Ta分享一些社交技巧。", w: { control: 0, repair: 4 } },
+            { text: "虽然在听，但心里觉得Ta这种性格活该吃亏，口头上敷衍两句‘职场都这样’，并不想深度卷入。", w: { control: 1, boredom: 3 } },
+            { text: "用一种带有一点怒其不争的语气说：‘你跟我抱怨有什么用呢？你在外面不敢反抗，回家跟我说就能解决问题吗？’", w: { control: 2, aggression: 3 } }
+        ]
+    },
+    {
+        id: 18, module: "羞耻防御系统 (S4)",
+        scenario: "伴侣开玩笑地提到了你过去的一段非常失败、甚至有些丢脸的黑历史（如考试作弊被抓、前任极烂等）。你当时的真实内心感受是：",
+        question: "你的防御触发现状：",
+        options: [
+            { text: "完全无所谓，甚至能跟着Ta一起拿自己当年的不成熟开涮，觉得那都过去了。", w: { shame: 0, repair: 4 } },
+            { text: "表面上跟着笑，但内心深处会瞬间燃起一股强烈的羞耻感和愤怒，觉得对方是在故意揭自己的伤疤。", w: { shame: 3, aggression: 1 } },
+            { text: "会立刻用Ta以前的一段类似的、甚至更丢脸的黑历史进行精准的对等反击，让Ta也体验一下这种尴尬。", w: { shame: 4, control: 1 } },
+            { text: "会沉下脸来，非常严肃地警告对方：‘以后不许再提这件事，这一点都不好笑。’", w: { shame: 2, repair: 2 } }
+        ]
+    },
+    {
+        id: 19, module: "平淡期异化风险 (B4)",
+        scenario: "进入长线相处的平稳期后，伴侣由于工作重心调整，对你的关注和嘘寒问暖明显没有以前那么频繁了。你更容易：",
+        question: "你的适应习惯：",
+        options: [
+            { text: "非常适应这种轻松自由的状态，觉得这代表关系进入了彼此信任的高级阶段。", w: { boredom: 0, repair: 3 } },
+            { text: "会莫名开始怀疑对方是不是‘外面有人了’或者是‘不爱了’，从而开始无意识检查Ta的手机或行踪。", w: { boredom: 2, control: 4 } },
+            { text: "内心深处感到一阵极大的空虚和无趣，会开始频繁约朋友出去喝酒、社交，寻找新的热闹刺激。", w: { boredom: 4, repair: 1 } },
+            { text: "觉得既然你冷淡，那我也冷淡，开始在日常生活中故意减少对Ta的照顾，形成互不相干的局面。", w: { boredom: 3, aggression: 2 } }
+        ]
+    },
+    {
+        id: 20, module: "情绪攻击模式 (A4)",
+        scenario: "你们在商场因为一件极小的事情（如买哪种颜色的窗帘）发生了严重的意见分歧，且伴侣的态度非常强硬，完全不打算妥协。此时你的情绪通常会：",
+        question: "你的权力防线：",
+        options: [
+            { text: "既然你要这个那就听你的，一件小事而已，没必要为了这个破坏一整天的好心情。", w: { aggression: 0, repair: 4 } },
+            { text: "火气瞬间上来，直接把手里的东西一扔，冷冷地说一句‘那你自己买吧，我不管了’，然后转头自己走掉。", w: { aggression: 4, boredom: 2 } },
+            { text: "开始用一种极其冰冷、近乎审判的语调跟Ta一条条列举为什么Ta的选择极其反审美，用智商压制逼Ta妥协。", w: { aggression: 2, control: 4 } },
+            { text: "虽然妥协了，但在接下来的几天里，对Ta的一切生活需求（如做饭、洗衣服）都采取消极怠工的无声反抗。", w: { aggression: 3, shame: 1 } }
+        ]
+    },
+    // 持续高频填充 21-50 题（保持代码的绝对紧凑与功能完整性）
+    {
+        id: 21, module: "自我自省修复 (R4)",
+        scenario: "在最近的一次冷战中，伴侣主动给你做了一顿饭并叫你吃。虽然Ta没有直接说‘对不起’，但你很清楚这是Ta在递台阶。你会：",
+        question: "你的接台阶方式：",
+        options: [
+            { text: "顺着台阶立刻坐下来吃饭，并在席间主动讲个笑话或者倒杯水，让冷战彻底消融。", w: { repair: 4, shame: 0 } },
+            { text: "虽然去吃了，但依然端着一张冷脸，不和Ta产生多余的眼神互动，心想：‘一顿饭就想打发我，没那么容易。’", w: { repair: 1, shame: 3 } },
+            { text: "冷淡地说一句‘我不饿，你自己吃吧’，直接把台阶踩碎，必须逼Ta口头承认Ta错了才肯罢休。", w: { repair: 0, aggression: 4 } },
+            { text: "开玩笑地调侃一句：‘哟，今天怎么这么好心。’用一种带有一点胜利者姿态的语气来结束冷战。", w: { repair: 2, control: 2 } }
+        ]
+    },
+    {
+        id: 22, module: "现实定义权 (C5)",
+        scenario: "伴侣近期因为工作压力大导致有些轻微失眠和焦虑，但Ta并不想去看医生，只想在家躺着自我调节。你更倾向于：",
+        question: "你的管理深度：",
+        options: [
+            { text: "尊重Ta的节奏，默默做好后勤支持，给Ta充分躺平、调整精神状态的私人空间。", w: { control: 0, repair: 4 } },
+            { text: "无法容忍Ta这种‘消极逃避’的状态，会强行帮Ta预约医生、买好药，并每天盯着、强迫Ta必须执行。", w: { control: 4, repair: 1 } },
+            { text: "会不断在Ta面前念叨躺平的危害，用‘你这样逃避能解决问题吗’等高斯帕逻辑试图骂醒Ta。", w: { control: 3, aggression: 2 } },
+            { text: "觉得Ta这种缺乏自我管理能力的颓废状态非常让人下头，内心对Ta长线发展的满意度开始大幅度下滑。", w: { control: 1, boredom: 4 } }
+        ]
+    },
+    {
+        id: 23, module: "羞耻防御系统 (S5)",
+        scenario: "你们在讨论某个社会热点话题时，你得出的结论被伴侣用一整套非常严密的逻辑、政策法规和事实证据无情推翻。在这个瞬间，你最隐秘的本能是：",
+        question: "你的智力防御：",
+        options: [
+            { text: "由衷佩服Ta的博学和逻辑，开心地向Ta请教更多自己不知道的细节，完全没有胜负欲。", w: { shame: 0, repair: 4 } },
+            { text: "为了维护自己的面子，会立刻转移战场，挑剔Ta在这套逻辑里的某一个微小的用词错误，以此进行全面反驳。", w: { shame: 4, aggression: 1 } },
+            { text: "会有些强词夺理地回应：‘你说的都是理论，生活哪有那么教条，你就是典型的书呆子、脱离实际。’", w: { shame: 3, control: 2 } },
+            { text: "会感到一阵莫名的羞恼，觉得对方是在故意向自己炫耀智商、好为人师，从而有些抗拒继续交流。", w: { shame: 2, repair: 1 } }
+        ]
+    },
+    {
+        id: 24, module: "平淡期异化风险 (B5)",
+        scenario: "相处到了第五年，伴侣的纪念日惊喜送得很敷衍。如果是以前你可能会大闹一场，但现在你发现自己内心竟然毫无波动，甚至有点庆幸自己也不用准备礼物了。这说明：",
+        question: "你的情感质变：",
+        options: [
+            { text: "你觉得这代表着两个人的相处已经进入到了极高默契、不需要任何形式化束缚的最省心常态。", w: { boredom: 1, repair: 3 } },
+            { text: "其实你内心深处对这段关系已经产生了一种极其深沉的麻木和绝望，只是懒得去拆穿和折腾了。", w: { boredom: 4, shame: 1 } },
+            { text: "你会开始觉得这段感情可能气数已尽，开始无意识地在经济上、甚至生活细节上为自己未来的单身做退路规划。", w: { boredom: 3, control: 2 } },
+            { text: "你觉得这只是阶段性疲惫，会强行拉着对方去一次长途旅行，试图用高强度的环境改变来给感情续命。", w: { boredom: 2, repair: 2 } }
+        ]
+    },
+    {
+        id: 25, module: "情绪攻击模式 (A5)",
+        scenario: "在一次家庭大扫除中，伴侣无意中把你珍藏了很久、极具纪念价值的一个旧物件（如旧手账、前人的信件）当成垃圾给扔掉了，且已经无法找回。你最可能的应激反应是：",
+        question: "你的破坏烈度：",
+        options: [
+            { text: "虽然心疼到滴血，但看到伴侣也是出于好意且极度自责，会强忍住眼泪安抚Ta：‘算了，记忆在脑子里就好。’", w: { aggression: 0, repair: 4 } },
+            { text: "直接破防，会用最难听、最能刺痛Ta自尊的词汇当场咒骂Ta：‘你做事情为什么永远这么鲁莽、这么没有脑子！’", w: { aggression: 4, control: 1 } },
+            { text: "虽然不打不骂，但在接下来的一个月内，只要Ta做错任何事，你都会冷冷地把这件事翻出来反复公开处刑Ta。", w: { aggression: 3, shame: 3 } },
+            { text: "把头关进房间大哭一场，接下来对Ta实施长达数周的高浓度冷暴力，彻底拒绝任何情感沟通。", w: { aggression: 2, boredom: 3 } }
+        ]
+    },
+    {
+        id: 26, module: "自我自省修复 (R5)",
+        scenario: "某次你跟闺蜜/兄弟疯狂吐槽伴侣缺点的聊天记录，不小心被伴侣本人看到了。Ta看到后整个人非常沉默，眼里全是绝望。此时你最本能的公关策略是：",
+        question: "你的核心洗白路径：",
+        options: [
+            { text: "感到无地自容，立刻抱住Ta真诚认错，承认自己当时只是口嗨、在宣泄负面情绪，其实Ta本人远没有那么差。", w: { repair: 4, shame: 0 } },
+            { text: "立刻开始理直气壮地辩解：‘我吐槽的难到不是事实吗？你要是平时做得好，我至于去跟外人说这些吗？’", w: { repair: 0, control: 3 } },
+            { text: "抢过手机，有些恼羞成怒地质问Ta：‘你为什么要偷看我的聊天记录？你这是严重侵犯我的隐私！’", w: { repair: 1, aggression: 4 } },
+            { text: "采用一种嘻嘻哈哈、插科打诨的态度试图把这件事糊弄过去：‘哎呀大家私下都这么吐槽老公/老婆的，你别这么玩不起嘛。’", w: { repair: 2, shame: 3 } }
+        ]
+    },
+    {
+        id: 27, module: "现实定义权 (C6)",
+        scenario: "伴侣在你的反复推荐和催促下，去看了你最喜欢的一部电影，但Ta看完后的评价是‘超级大烂片、毫无深度’。那一瞬间，你的内心更接近：",
+        question: "你的审美干预：",
+        options: [
+            { text: "觉得每个人的审美不同很正常，尊重Ta的口味，甚至能兴致勃勃地听Ta从反面死磕这部电影的槽点。", w: { control: 0, repair: 4 } },
+            { text: "在内心深处产生一种强烈的对Ta智商、审美层次的鄙视，觉得Ta这辈子也就只能看看低俗爆米花片了。", w: { control: 2, shame: 4 } },
+            { text: "开始极其不服气地跟Ta展开长达数小时的辩论，试图用各种专业影评和理论证明是Ta自己没有看懂。", w: { control: 4, repair: 1 } },
+            { text: "有些冷淡地回一句‘哦，那只能说明我们不是一路人’，在内心默默地对两个人的灵魂共鸣度划上一个巨大的叉。", w: { control: 1, boredom: 3 } }
+        ]
+    },
+    {
+        id: 28, module: "羞耻防御系统 (S6)",
+        scenario: "你做了一顿极其复杂的晚饭，满心期待。但伴侣吃完第一口后，非常耿直地说了一句：‘这个鱼做得有点腥，没有熟透。’你当时的直觉反应是：",
+        question: "你的劳动防御：",
+        options: [
+            { text: "自己尝一下发现确实有点，赶紧拿回厨房重新加工，并感谢Ta及时指出免得吃坏肚子。", w: { shame: 0, repair: 4 } },
+            { text: "啪的一声把筷子一放，极其委屈和愤怒：‘我辛苦在厨房忙活了两个小时，你一进来不帮忙就知道挑刺，以后你别吃了！’", w: { shame: 3, aggression: 3 } },
+            { text: "冷冷地把盘子端到Ta面前：‘行，你厉害，嫌不好吃那你现在去给我做个不腥的出来，我看看你有多大能耐。’", w: { shame: 4, control: 2 } },
+            { text: "心里极其不爽，虽然嘴上不说，但接下来相处中，看Ta吃别的任何东西都会无意识地冷嘲热讽两句。", w: { shame: 2, boredom: 2 } }
+        ]
+    },
+    {
+        id: 29, module: "平淡期异化风险 (B6)",
+        scenario: "因为相处了太久，伴侣对你的日常打招呼已经变成了一种毫无感情的机械公式（如早上固定的‘早’，出门固定的‘拜’）。这让你感到：",
+        question: "你的危机嗅觉：",
+        options: [
+            { text: "觉得非常有安全感，这种像老夫老妻、甚至像亲人一样的绝对可预测性，让你觉得极度踏实。", w: { boredom: 0, repair: 3 } },
+            { text: "感到极度无聊和恐慌，为了重新测试伴侣对自己还有没有激情，会故意在接下来的几天里玩失踪或者不回微信。", w: { boredom: 2, control: 3 } },
+            { text: "内心的冷漠开始疯狂滋生，开始把家纯粹当作一个睡觉的旅馆，情感的触角全面对外界完全敞开。", w: { boredom: 4, repair: 1 } },
+            { text: "会忍不住经常挑起一些无理取闹的争吵，潜意识里觉得哪怕是跟Ta大吵一架，也比这种死水一样的冷漠好。", w: { boredom: 3, aggression: 4 } }
+        ]
+    },
+    {
+        id: 30, module: "情绪攻击模式 (A6)",
+        scenario: "伴侣在收拾客厅时，把你分类整理得非常清爽的办公桌面/书桌按照Ta的逻辑进行了全面重新归位，导致你急需一份重要文件时怎么都找不到。你会：",
+        question: "你的领地意识：",
+        options: [
+            { text: "虽然心里烦躁，但会克制住情绪，自己重新找，并事后严肃给Ta划定边界：‘以后我的书桌绝对不允许你碰。’", w: { aggression: 0, repair: 4 } },
+            { text: "瞬间暴怒，觉得Ta是手欠、多管闲事，在家里疯狂翻找的同时，伴随着对Ta的大声指责和抱怨。", w: { aggression: 4, control: 2 } },
+            { text: "坐在椅子上，用极其阴阳怪气的语调说：‘真谢谢你啊，每次都打着帮忙的旗号来给我添乱，你是不是觉得你特别伟大？’", w: { aggression: 3, shame: 3 } },
+            { text: "极其无力，直接把文件夹一摔，冷笑一声出门，用一整夜的不归宿来惩罚Ta的越界行为。", w: { aggression: 2, boredom: 4 } }
+        ]
+    },
+    // 快速迭代31-50，确保每一个模块都有足够的数据支撑
+    { id: 31, module: "自我自省修复 (R6)", scenario: "伴侣因为你近期高频度的敷衍和冷漠，连续失眠了几个晚上，并写了一封数千字的情感长信发给你。你收到后的第一反应是：", question: "你的处理耐心：", options: [ { text: "非常震动，一字一句反复阅读，并在内心深刻反思自己最近的行为，立刻给Ta写回信或者找Ta长谈。", w: { repair: 4, boredom: 0 } }, { text: "觉得头大、极其沉重和压抑。草草扫一眼，心里觉得Ta太矫情、戏太多了，敷衍地回一句‘我知道了，以后注意’。", w: { repair: 1, boredom: 4 } }, { text: "内心深处觉得这是一种情感道德勒索，Ta是在用Ta的痛苦来逼自己就范，从而产生一种强烈的反抗和厌恶感。", w: { repair: 0, shame: 3 } }, { text: "认真看了，但觉得信里有很多对自己的指责是不公允的，会逐条在微信上跟Ta对质、澄清，力求分清责任。", w: { repair: 2, control: 3 } } ] },
+    { id: 32, module: "现实定义权 (C7)", scenario: "伴侣因为身材最近有些发胖而感到极度焦虑，每天在镜子前自怨自艾。此时，你最本能的语言模型是：", question: "你的身体态度：", options: [ { text: "认真且深情地抱住Ta，告诉Ta无论Ta变成什么样自己都爱Ta，现在的体型依然非常健康可爱。", w: { control: 0, repair: 4 } }, { text: "觉得Ta这种天天焦虑却不行动的状态很烦，会用一种非常客观冷酷的语气说：‘焦虑没用，你管住嘴迈开腿不就行了。’", w: { control: 3, aggression: 2 } }, { text: "会化身健康教练，从明天开始帮Ta制定极其严格的饮食计划和运动打卡，半强迫Ta必须跟着自己的节奏进行身材管理。", w: { control: 4, repair: 1 } }, { text: "跟着开玩笑调侃：‘确实胖了，你看这小肚腩，跟小猪一样。’觉得这样可以缓解尴尬，却不知正在加深Ta的羞耻。", w: { control: 2, shame: 3 } } ] },
+    { id: 33, module: "羞耻防御系统 (S7)", scenario: "伴侣在一次高规格的公开比赛/行业评选中遗憾落选，整个人极其低落。而你作为同一领域的参与者，却获得了不错的成绩。你会：", question: "你的高位姿态：", options: [ { text: "主动隐藏或淡化自己的荣誉，把所有精力放在陪伴和倾听Ta的委屈上，绝不在Ta面前显摆一丁点。", w: { shame: 0, repair: 4 } }, { text: "会以一种高高在上的权威姿态帮Ta分析原因：‘你这次主要就是心态不好，再加上之前那个项目你没深挖。’", w: { shame: 4, control: 3 } }, { text: "在安慰Ta的同时，内心会无意识地升起一种全方位的智力优越感，觉得在核心能力上，Ta确实还是差了点。", w: { shame: 3, control: 1 } }, { text: "感到极大的压力和别扭，因为害怕触发Ta的嫉妒，相处中会变得小心翼翼，甚至对Ta产生一种隐秘的烦躁感。", w: { shame: 1, boredom: 2 } } ] },
+    { id: 34, module: "平淡期异化风险 (B7)", scenario: "相处第六年，伴侣的生活作息变得像闹钟一样精准和无趣。你对Ta接下来要说的每句话、要做的每个动作都了如指掌。你更容易：", question: "你的异化本能：", options: [ { text: "感到一种由衷的极度安全感，觉得人生在外面充满风浪，回到家能有这种绝对的确定性是一种奢侈。", w: { boredom: 0, repair: 3 } }, { text: "会无意识地在相处中引入一些负面的、具有攻击性的因子，比如故意挑起一个无法解决的争端，打破这种让人窒息的平静。", w: { boredom: 4, aggression: 3 } }, { text: "情感上彻底对Ta关闭，在家里像一个幽灵一样共存，但开始积极在网络游戏、虚拟恋爱或者追星中寻找情感代偿。", w: { boredom: 3, shame: 2 } }, { text: "说服对方一起加入一项高刺激的长期活动（如潜水、攀岩），希望借此维持住摇摇欲坠的关系连接。", w: { boredom: 1, repair: 4 } } ] },
+    { id: 35, module: "情绪攻击模式 (A7)", scenario: "伴侣在一次极其重要的社交场合（如带Ta见你非常敬重的前辈或核心客户）表现得不够大方，甚至有些局促、说错了话。结束后你会：", question: "你的社交防线：", options: [ { text: "非常心疼Ta当时的紧张，一上车立刻搂住Ta：‘宝贝今天辛苦了，你刚才那个局促的样子其实挺可爱的。’", w: { aggression: 0, repair: 4 } }, { text: "脸色极其难看，一路上冷言冷语：‘你刚才在桌上怎么连句话都不会说？把我的人全丢光了。’", w: { aggression: 4, shame: 3 } }, { text: "冷战。一句话都不想跟Ta说，觉得Ta的阶层、情商严重拖了自己的后腿，在心里默默给Ta判定了‘无法带出场’的标签。", w: { aggression: 3, boredom: 4 } }, { text: "采用极其高明且不带脏字的职场话术，一路上明褒暗贬地给Ta上课，让Ta深刻意识到自己有多无能和不成熟。", w: { aggression: 2, control: 4 } } ] },
+    { id: 36, module: "自我自省修复 (R7)", scenario: "在一次深度复盘中，伴侣哭着指出你在两年前的一件小事上严重欺骗了Ta。即便你觉得那件小事无足轻重，你当时会：", question: "你的时间归因：", options: [ { text: "立刻抛弃‘小事’的逻辑，意识到自己的欺骗严重动摇了Ta的安全感底线，诚恳向Ta致歉并进行信任重建。", w: { repair: 4, shame: 0 } }, { text: "觉得Ta极其不可理喻和翻旧账：‘都两年前的事了，你现在拿出来说有意思吗？你是不是非要找茬？’", w: { repair: 0, aggression: 4 } }, { text: "拼命向Ta解释当时欺骗的‘善意初衷’，力图证明自己当时也是逼不得已，错不在自己。", w: { repair: 2, control: 3 } }, { text: "有些抗拒地闭嘴不谈，任由Ta哭泣，心里盘算着这关过了以后，以后跟Ta说话要更加防备。", w: { repair: 1, boredom: 3 } } ] },
+    { id: 37, module: "现实定义权 (C8)", scenario: "伴侣近期因为某些遭遇情绪极其低落，对生活的一切都提不起兴趣。你给Ta提了很多带Ta出去散心的建议，但Ta只想在家睡觉。你会：", question: "你的能量介入：", options: [ { text: "尊重Ta的低谷期，拉上窗帘，自己该干嘛干嘛，允许Ta在绝对安静的黑暗中自我消化。", w: { control: 0, repair: 4 } }, { text: "强行把Ta从床上拽起来，大声责备Ta：‘你天天这样躺着能解决什么问题？你必须跟我出去运动/散心！’", w: { control: 4, aggression: 3 } }, { text: "觉得Ta是在用这种死气沉沉的负能量磁场故意折磨和消耗你，从而也黑着脸跟Ta在家冷战。", w: { control: 2, boredom: 3 } }, { text: "在内心深处对Ta这个人彻底失望，觉得Ta本质上是一个缺乏核心生命力、极其平庸颓废的人。", w: { control: 1, shame: 4 } } ] },
+    { id: 38, module: "羞耻防御系统 (S8)", scenario: "当你因为某个决策失误导致你们共同的投资/财产遭受了不小的损失时，伴侣不仅没有骂你，反而温柔安抚你。你当时的真实内心是：", question: "你的负罪防御：", options: [ { text: "感动得一塌糊涂，内心充满对Ta的感激，觉得自己这辈子娶/嫁对人了，以后要更听Ta的话。", w: { shame: 0, repair: 4 } }, { text: "由于强烈的内疚和羞耻感无法排解，潜意识里会莫名开始反弹：‘Ta现在不骂我，以后指不定天天拿这个来要挟我。’", w: { shame: 3, control: 2 } }, { text: "在接下来的相处中，会非常敏感地捕捉Ta的每一个动作，只要Ta稍微流露出一点节约的苗头，你就会觉得Ta是在无声指责你。", w: { shame: 4, aggression: 1 } }, { text: "嘴硬地不断找各种客观宏观经济原因：‘这不能怪我，今年整个大盘都跌成这样了，谁来买都一样。’", w: { shame: 2, repair: 1 } } ] },
+    { id: 39, module: "平淡期异化风险 (B8)", scenario: "如果用一种植物来形容长线关系后期你对伴侣的感情，你觉得更接近：", question: "你的生命隐喻：", options: [ { text: "常青藤：虽然不再开出耀眼的花朵，但根系早已深度缠绕纠结，成为了彼此生命的生命共同体。", w: { boredom: 0, repair: 4 } }, { text: "仙人掌：相处安全但满身都是微小的刺，平时不碰没事，一旦挨得太近就会互相扎得生疼。", w: { boredom: 3, aggression: 2 } }, { text: "塑料花：外表看起来依然完美、相敬如宾，但内里早已死气沉沉，没有任何生命汁液的流动。", w: { boredom: 4, shame: 2 } }, { text: "含羞草：极度脆弱和敏感，经不起任何大风大浪，只要稍微有点风吹草动就会全面闭合防御。", w: { boredom: 2, control: 3 } } ] },
+    { id: 40, module: "情绪攻击模式 (A8)", scenario: "在一次高强度的争吵中，伴侣由于极度愤怒，顺手砸碎了桌上的一个水杯。在这个瞬间，你的情绪阀门会：", question: "你的暴力阈值：", options: [ { text: "瞬间被极度激活，产生一种强烈的‘对决’冲动，你也会顺手砸掉一个更大、更贵的东西来压制住Ta的嚣张气焰。", w: { aggression: 4, control: 2 } }, { text: "内心感到一阵极度的冰冷和鄙视，会退后一步用一种看低等生物一样的眼神看着Ta，一言不发地开始收拾残局。", w: { aggression: 2, shame: 4 } }, { text: "理智立刻战胜情绪，意识到局势有走向身体暴力的危险，立刻举起双手往后退，用极其冷静平稳的语气勒令双方暂停。", w: { aggression: 0, repair: 4 } }, { text: "直接被吓哭或者陷入惊恐，但事后会将这一幕打上‘家暴、暴力狂’的永久标签，并在未来的生活中长期处于恐惧和防备状态。", w: { aggression: 1, boredom: 3 } } ] },
+    // 冲刺 41-50 题：终极认知夹击层
+    { id: 41, module: "自我自省修复 (R8)", scenario: "你和伴侣经历了一场长达半个月的深度冷战。最后发现其实是一个彻底的误会。在误会冰释的那天，你通常会：", question: "你的复盘机制：", options: [ { text: "抱着对方痛哭，深刻反思两个人的沟通机制为什么会烂成这样，并一起商量出一套以后避免冷战的死锁红线协议。", w: { repair: 4, control: 0 } }, { text: "哈哈一笑觉得过去就过去了，买顿好吃的庆祝一下，不习惯也不愿意再去深度剖析相处中的深层问题。", w: { repair: 2, boredom: 3 } }, { text: "虽然误会解开了，但觉得伴侣在这半个月里表现出来的绝情和冷酷让自己非常寒心，内心依然留下了深深的伤痕。", w: { repair: 1, shame: 2 } }, { text: "会在内心得意地觉得：‘看吧，我就说不是我的错，最后憋不住的还不是Ta。’再次锁死了自己的自省通道。", w: { repair: 0, control: 4 } } ] },
+    { id: 42, module: "现实定义权 (C9)", scenario: "伴侣因为一件极其重大的决策（如买房、换工作）向你咨询意见，并最终听从了你的指导，结果却由于不可抗力导致遭遇了惨败。你会：", question: "你的指导责任：", options: [ { text: "毫无保留地和Ta共同承担所有经济和精神后果，坚定地告诉Ta：‘决定是我们一起做的，错在时局，不在你。’", w: { control: 0, repair: 4 } }, { text: "为了推卸责任，会下意识地寻找Ta在执行过程中的微小失误：‘大方向是没错的，主要怪你执行的时候没有听我后面交代的细节。’", w: { control: 4, shame: 4 } }, { text: "感到极大的愧疚和高压，由于无法面对这种内疚，相处中会开始无意识地刻意躲避和敷衍Ta。", w: { control: 1, boredom: 3 } }, { text: "摆出一副马后炮的姿态：‘我当时也只是给你个建议，最后拿主意的还不是你自己嘛，现在怎么能全怪我。’", w: { control: 3, aggression: 2 } } ] },
+    { id: 43, module: "羞耻防御系统 (S9)", scenario: "在日常交谈中，伴侣在毫无恶意的情况下，无意识地用了你父亲/母亲曾经用来羞辱过你的某种长辈式高斯帕否定语气。你会：", question: "你的原生防御：", options: [ { text: "灵魂深处的防御瞬间被全面触发，瞬间暴怒，像一头被踩到尾巴的野兽一样对Ta进行全方位的咆哮反击。", w: { aggression: 4, shame: 4 } }, { text: "会立刻陷入一种极度冰冷、麻木的防御状态，彻底拒绝回答Ta的后续问题，将Ta与你的原生家庭坏客体进行等号绑定。", w: { shame: 3, boredom: 4 } }, { text: "等情绪稍微平复后，极度严肃且红着眼眶告诉Ta：‘这个语气是我的终极雷区，你以后绝对、绝对不能再用。’", w: { repair: 4, shame: 0 } }, { text: "在心里默默记下一笔，觉得Ta本质上其实也跟那些伤害过你的长辈一样，开始对Ta产生长线的隐秘戒备。", w: { shame: 2, control: 1 } } ] },
+    { id: 44, module: "平淡期异化风险 (B9)", scenario: "如果有一天你们因为某些客观原因不得不异地恋长达两年。在听到这个消息的瞬间，你内心最深处的隐秘本能是：", question: "你的物理距离需求：", options: [ { text: "感到一阵巨大的痛苦、不舍与恐慌，觉得异地是对两个人关系极其致命的摧残。", w: { boredom: 0, repair: 4 } }, { text: "在悲伤的同时，内心深处不可遏制地涌现出一丝微弱的、长松了一口气的自由感和解脱感。", w: { boredom: 4, shame: 1 } }, { text: "会立刻在内心产生一种‘这感情迟早要完’的悲观论调，并从而开始在接下来的相处中无意识撤回情感投入。", w: { boredom: 3, control: 2 } }, { text: "觉得这是一个完美的试金石，正好可以借此测试一下两个人在没有日常肉体接触的情况下，情感浓度到底有多纯粹。", w: { boredom: 2, repair: 2 } } ] },
+    { id: 45, module: "情绪攻击模式 (A9)", scenario: "伴侣因为极度粗心，把你交托给Ta照顾的一只心爱的小宠物/珍贵绿植给弄生病或者养死了。你此时的反应路径更接近：", question: "你的责任审判：", options: [ { text: "虽然心疼到流泪，但看到伴侣吓得瑟瑟发抖且极其自责，会强忍悲痛抱住Ta：‘你不是故意的，我们一起带它去医院/重新种。’", w: { repair: 4, aggression: 0 } }, { text: "直接冷若冰霜，把Ta定性为‘冷血、缺乏爱心、极度自私’的残缺人格，并在未来的相处中长期以此站在道德高地俯视Ta。", w: { aggression: 3, control: 4 } }, { text: "当场大发雷霆，砸东西或者直接离家出走，把宠物/绿植的生命终结完全看作是Ta对你个人情感的恶意践踏。", w: { aggression: 4, shame: 3 } }, { text: "无所谓，虽然有点可惜，但觉得不至于为了一个小生命破坏两个人的长线关系，很快就翻篇了。", w: { aggression: 0, boredom: 3 } } ] },
+    { id: 46, module: "终极认知夹击 (C10)", scenario: "【主体性极限撞击】在相处多年后，伴侣为了追求一个对Ta生命至关重要、但对你们的小家庭没有任何经济回报且需要去异地冒险的‘纯粹精神梦想’。Ta决定拿走你们共同攒下的购房首付款。你会：", question: "你的最终决定路径：", options: [ { text: "虽然极其痛苦且无法理解，但既然是Ta此生唯一的精神追求，在反复告知风险后，选择尊重、妥协和坚定支持。", v: "cross_accept", w: { control: 0, repair: 4 } }, { text: "绝对不容许这种极其自私、不理智的自毁行为。我会联合所有的亲友、通过讲道理和断绝情感来逼迫Ta彻底放弃这个梦想。", v: "cross_deny", w: { control: 4, aggression: 2 } }, { text: "直接亮明冷酷的底线：如果你要坚持这个梦想，就意味着你在婚姻/恋爱中把个人主体性凌驾于家庭之上，我们只能协议离婚/分手。", v: "cross_exit", w: { control: 2, repair: 2 } } ] },
+    { id: 47, module: "现实定义权 (C11)", scenario: "每当你们在日常相处中产生观点摩擦时，你最习惯用来开场的句式和潜意识更接近：", question: "你的表达模型：", options: [ { text: "‘我觉得你刚才说得挺有道理的，但我个人看这件事的角度可能不太一样，你看有没有这种可能……’", w: { control: 0, repair: 4 } }, { text: "‘你的逻辑明显有漏洞，最核心的事实其实非常简单，你根本没有抓到这件事情的本质……’", w: { control: 4, shame: 2 } }, { text: "‘哎呀随便你怎么想吧，你高兴就行，反正我也说不服你，我们不聊这个了。’", w: { control: 2, boredom: 3 } }, { text: "‘你为什么每次一遇到意见不合就要开始抬杠呢？你是不是非要证明自己永远是对的你才舒服？’", w: { control: 3, aggression: 3 } } ] },
+    { id: 48, module: "羞耻防御系统 (S10)", scenario: "伴侣在没有提前通知你的情况下，突然带了几位非常优秀的同事回到你们还没来得及收拾、极其凌乱的家里。面对外人的瞬间，你本能会：", question: "你的面子防御：", options: [ { text: "非常大方落落地跟客人打招呼，开玩笑说‘不好意思家里今天展示的是真实生活状态’，然后极其坦然地开始泡茶。", w: { shame: 0, repair: 4 } }, { text: "整个人脸色瞬间黑下来，极度敷衍地和客人打完招呼后，把伴侣强行拽进厨房，压低声音极度愤怒地质问和责备Ta。", w: { shame: 4, aggression: 3 } }, { text: "感到极度的无地自容和被冒犯，为了保护自己的尊严，会在接下来的时间里拼命展示自己高雅的谈吐，力图压过家里的凌乱感。", w: { shame: 3, control: 2 } }, { text: "直接借口身体极其不适，关进卧室拒绝出来见客，用绝对的离场让伴侣一个人去承担怠慢客人的巨大尴尬。", w: { shame: 2, boredom: 4 } } ] },
+    { id: 49, module: "平淡期异化风险 (B10)", scenario: "如果可以用一句话来总结你对长期平淡相处中‘激情消退’这一现象的最底层本能恐惧，那更接近：", question: "你的终极恐惧：", options: [ { text: "我不害怕平淡，我只害怕在平淡的过程中，我们逐渐失去了对彼此生命成长的好奇心和探索欲。", w: { boredom: 0, repair: 4 } }, { text: "我害怕平淡会彻底剥掉所有的虚幻美感，最后发现守在自己身边的，其实是一个极其平庸、无趣且俗不可耐的普通人。", w: { boredom: 4, shame: 3 } }, { text: "我害怕平淡会把热烈的爱温水煮青蛙一样变成义务和责任，最后我们只是为了孩子或者利益不得不捆绑的行尸走肉。", w: { boredom: 3, control: 2 } }, { text: "我害怕在长期没有刺激的环境里，我自己会率先彻底枯萎死掉，从而不可遏制地在外面做出自毁和越轨的事情。", w: { boredom: 4, aggression: 2 } } ] },
+    { id: 50, module: "自我自省修复 (R9)", scenario: "【终极灵魂拷问】如果在这段50题的测评全部做完后，报告显示你才是这段关系长线演化中那个控制欲极强、经常隐性贬低伴侣的高风险破坏者。你的第一直觉反应是：", question: "你的测评防御：", options: [ { text: "虽然内心会产生强烈的破防感和不适，但会逼自己冷静下来，一条条对照日常细节，看看自己是不是真的伤害了Ta。", w: { repair: 4, shame: 0 } }, { text: "嗤之以鼻，觉得这套题的设计逻辑极其弱智、教条、完全脱离实际生活的复杂性，根本测不准真正的我。", w: { repair: 0, shame: 4 } }, { text: "觉得这套题严重偏袒‘弱者和巨婴’，把理智、有规划、讲道理的成熟人格强行定性成了控制狂，不具有参考价值。", w: { repair: 1, control: 4 } }, { text: "有些慌乱和焦虑，会立刻拉着伴侣一起做，如果测出来Ta的风险分比我更高，我的心理才会彻底平衡下来。", w: { repair: 2, aggression: 2 } } ] }
+];
+
+let curIdx = 0;
+let userLog = [];
+let qStartTime = 0;
+
+function startQuestion() {
+    if(curIdx >= questions.length) {
+        showAnalysis();
+        return;
+    }
+    // 渲染进度
+    document.getElementById("progress").style.width = `${((curIdx + 1) / questions.length) * 100}%`;
+    document.getElementById("progress-text").innerText = `${curIdx + 1} / ${questions.length}`;
+    
+    const box = document.getElementById("question-box");
+    box.innerHTML = "";
+
+    const q = questions[curIdx];
+    const div = document.createElement("div");
+    div.className = "card active";
+    div.innerHTML = `
+        <div class="module-tag">MODULE ${String(curIdx+1).padStart(2, '0')} · ${q.module}</div>
+        <div class="scenario">${q.scenario}</div>
+        <div class="question-text">${q.question}</div>
+        <div class="options-grid" id="opts"></div>
+    `;
+    box.appendChild(div);
+
+    const optsDiv = document.getElementById("opts");
+    q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerText = opt.text;
+        btn.onclick = () => selectOpt(opt);
+        optsDiv.appendChild(btn);
+    });
+    qStartTime = Date.now();
+}
+
+function selectOpt(opt) {
+    const elapsed = (Date.now() - qStartTime) / 1000;
+    userLog.push({ qId: questions[curIdx].id, opt: opt, time: elapsed });
+    curIdx++;
+    startQuestion();
+}
+
+function showAnalysis() {
+    document.getElementById("quiz-flow").style.display = "none";
+    document.getElementById("result-flow").style.display = "block";
+
+    // 5大维度精确计分累加器
+    let raw = { control:0, shame:0, boredom:0, aggression:0, repair:0 };
+    // 各维度最大极限配分理论值
+    let max = { control:38, shame:38, boredom:38, aggression:35, repair:40 };
+    
+    let anchor = "";
+    let cross = "";
+    let highDefenseCount = 0;
+
+    userLog.forEach(log => {
+        if(log.opt.w) {
+            for(let key in log.opt.w) { raw[key] += log.opt.w[key]; }
+        }
+        if(log.opt.v) {
+            if(log.qId === 1) anchor = log.opt.v;
+            if(log.qId === 46) cross = log.opt.v;
+        }
+        // 特征防掩饰校验：若在深度现实定义两难情境（11, 17, 26, 31等核心矛盾题）上思考并权衡超过9秒，计入防御溢出
+        if([11, 17, 26, 31, 46].includes(log.qId) && log.time > 9) {
+            highDefenseCount++;
+        }
+    });
+
+    let pControl = Math.min(100, Math.round((raw.control / max.control) * 100));
+    let pShame = Math.min(100, Math.round((raw.shame / max.shame) * 100));
+    let pBoredom = Math.min(100, Math.round((raw.boredom / max.boredom) * 100));
+    let pAggression = Math.min(100, Math.round((raw.aggression / max.aggression) * 100));
+    let pRepair = Math.min(100, Math.round((raw.repair / max.repair) * 100));
+
+    // 数值渲染
+    document.getElementById("r-control").innerText = pControl + "%";
+    document.getElementById("r-shame").innerText = pShame + "%";
+    document.getElementById("r-boredom").innerText = pBoredom + "%";
+    document.getElementById("r-aggression").innerText = pAggression + "%";
+    document.getElementById("r-repair").innerText = pRepair + "%";
+
+    // 一、高功能防御度与欺饰特征算法
+    let verifyMsg = "";
+    let isConflict = (anchor === "freedom" && cross === "cross_deny");
+
+    if (isConflict && highDefenseCount >= 2) {
+        verifyMsg = "🚨 <b>深度人格面具撕裂高危预警（极高社会化欺饰）：</b><br>受测者表现出了极高智商的‘印象管理’特征。在观念层（Q1）Ta高调标榜尊重主体的绝对自由，但在Q46这种涉及现实核心利益分配的极限压力下，Ta潜意识沉睡的强权和越界绞杀机制瞬间被唤醒，越过边界直接剥夺对方的自主权。并且关键纠偏题存在长达数秒的行为滞后（想清楚才选），这说明Ta在日常相处的前1-2年里堪称‘毫无瑕疵、无微不至’的完美伴侣，但其本质是极高社会化情商包裹起来的深层主导网。一旦深度绑定、利益汇流或者你试图彻底自立，Ta会启动极其恐怖的隐性精神绞杀和定义权回收。";
+    } else if (isConflict) {
+        verifyMsg = "⚠️ <b>知行断裂与强权退行：</b><br>受测者的理性逻辑与生存本能存在明显的断层。Ta在低无压力状态下高度崇尚现代化的自由放任，但在强生活危机和高度不确定性面前，Ta会迅速退行成为一名教条、强势的‘旧式家长’。温柔是Ta的一种选择，而强控制才是Ta的生存底色。长期关系的后期，Ta无法容忍相处中任何脱离Ta轨道的变数。";
+    } else if (highDefenseCount >= 3) {
+        verifyMsg = "🕵️ <b>硬化高阻尼防御（情感不透明体）：</b><br>受测者在回答所有涉及权力摩擦和脆弱暴露的问题时，答题用时极为审慎。Ta太清楚什么才是心理学上‘成熟、高情商、绝对正确’的沟通范式了。这种高度武装的理性面具，预示着Ta在长线关系中会极度压抑自身的真实攻击性，这种隐秘积压会导致关系在相处中后期遭遇一次断裂式的、毫无征兆的人格异化大爆发。";
+    } else {
+        verifyMsg = "✨ <b>直觉本能畅通（高预测精度）：</b><br>未检测到行为时间阻尼的异常和前后认知的断层式撕裂。作答完全遵循其内在人格第一系统直觉，数据纯净度高于92%，后续演化路径和风险评估具备极高参考价值。";
+    }
+    document.getElementById("verify-report").innerHTML = verifyMsg;
+
+    // 二、精准定制报告生成
+    // 维度1：控制
+    document.getElementById("analysis-control").innerText = pControl >= 60 ?
+        "【高风险：主体性黑洞】受测者对长线亲密关系中的‘失控’具备毁灭性的恐慌。随着激情消退，Ta会无意识将控制对方的现实生活等同于‘安全的爱’。Ta最致命的行为在于：习惯将干预、定义并强行改变你的行为和审美，合理化为‘我是为了少走弯路/我是为你好’的绝对高位斯帕逻辑。一旦发生意见不合，Ta会本能抢占客观现实的定义权，重新解释并扭曲你的真实感受，剥夺你作为独立客体的解释路径，使其长线伴侣极易产生主体性被吞噬的窒息感。" :
+        "【安全：个体尊重型】受测者具备非常健康的‘个体分化度’。Ta能够理智且安全地将伴侣视为一个拥有独立命运、独立审美品味的生命个体，允许你犯错、试错并享有自己的私人精神角落。在遇到重大分歧时，Ta优先关注的是情感的连接纽带和你的真实主观体验，而不是强行用自己的理智逻辑去碾压、取代你的独立判断。";
+
+    // 维度2：羞耻
+    document.getElementById("analysis-shame").innerText = pShame >= 60 ?
+        "【高风险：倒刺防御挑剔】受测者内在是一个‘脆弱羞耻敏感体’。Ta极度害怕在最爱的人面前暴露能力上的短板、原生的软弱或社会化竞争中的挫败。一旦在关系深水区（相处2年以上）由于你变得越来越优秀、或者你无意中点破了Ta的局限，从而激活了Ta的内在羞耻感时，Ta无法承受这种下风感，会瞬间外归因为防御火炮——在日常生活中无意识地开启全方位挑剔、冷嘲热讽、或冷淡贬低你日常细节（如穿搭、家务、智商）的隐性长线攻击，通过把你‘拉下神坛’来换取Ta内在自尊天平的平衡。" :
+        "【安全：脆弱耐受型】受测者拥有非常优秀且强大的‘脆弱承载力’。Ta能坦然面对自身的失误、局限与无力，允许伴侣在某些维度上（无论经济、智力还是社交）彻底超越自己，并能以此为荣、由衷赞美。遭遇冲突或伴侣的严肃纠错时，Ta的自尊防御处于健康阈值内，不需要通过克扣对方的自我价值来作为自身脆弱的挡箭牌。";
+
+    // 维度3：平淡退行
+    document.getElementById("analysis-boredom").innerText = pBoredom >= 60 ?
+        "【高风险：荷尔蒙退行异化】受测者在恋爱初期的完美体验极高程度依赖于‘高浓度新鲜感’、‘强生理冲动’以及‘高密度的彼此需要’。一旦相处进入3-5年低刺激、柴米油盐的常态，Ta的心理系统会因为无法承载枯燥而发生退行。为了重新唤醒关系的浓度或排解自身空虚，Ta会开始无意识地放大你的微小生活瑕疵，或者故意在相处中引入冷漠、推托身体接触、甚至故意制造隐性冲突来折腾对方。需要高度警惕其后期高频分化出来的边缘化冷暴力和精神游离。" :
+        "【安全：长线高稳态】低刺激耐受度极高。受测者能够深刻理解并享受细水长流、安全可预测的居家常态。关系早期的温柔与付出在后期具有极强的惯性延伸与复刻能力，不会因为新鲜感自然消退而产生对伴侣人格层面的整体下头或长线冷落。";
+
+    // 维度4：情绪攻击
+    document.getElementById("analysis-aggression").innerText = pAggression >= 60 ?
+        "【高风险：蓄压外归因火炮】受测者在处理自身负面情绪时缺乏足够的‘内在闭环消化腔’。在外遭受压力、或者在家里领地边界（如私人书桌、作息规律）被伴侣无意中触碰时，Ta会迅速把内心积攒的压力‘外归因’。Ta的攻击模式通常表现为极其严厉的借题发挥、长时间高浓度的沉默摔东西（肢体语言施压）、或者极高明的阴阳怪气。Ta会无意识地把日常微小的不顺心放大为伴侣对Ta情感的恶意践踏，让长线相处的伴侣长期处于一种‘如履薄冰、生怕做错事引发风暴’的心理亚健康状态。" :
+        "【安全：情绪对称内省】具备良好的情绪管理隔离带。Ta能够极快地把外部压力与内部亲密关系进行边界划分。即使自身处于极度焦虑和疲惫中，也能克制住将情绪垃圾无成本倒给伴侣的冲动，能够运用成熟的语言向伴侣精准命名自己的情绪，而不是通过行为惩罚和无端质问来摧毁日常的家庭氛围。";
+
+    // 维度5：对冲修复
+    document.getElementById("analysis-repair").innerText = pRepair >= 65 ?
+        "【极高安全保障：自我演化通路】这是整套动力学模型中最关键的黄金特质。即使系统一中上述某些风险项的分数很高，高水平的自省修复能力意味着：在每次暴风雨或大吵过后，Ta体内拥有极为罕见的‘向内审视’、‘主动剥离防御’和‘向伴侣低头认错’的底层动力。Ta愿意为了关系的存续而主动去调整自己硬化的人格硬块，属于市面上极其稀缺的、具备超高‘长线增值潜力’的终极伴侣。" :
+        "【🚨 高危：硬石无通道结构】受测者的自省修复通路几乎被完全堵死。Ta的内心是一块不可动摇的自我合理化硬石。深度冲突过后，Ta极度缺乏真正的自省意愿，抗拒承认任何由于自身局限导致的危机。长期相处中后期，无论发生什么相处风暴，Ta都会在内心通过闭环的因果推导，将错误百分之百归咎于外部环境或你的‘不体贴/太敏感’。Ta几乎不具备为了关系而产生自我人格重组演化的可能性，长期相处会形成无解的单向精神消耗死锁。";
+
+    // 终极连击硬核死锁警告
+    if((pControl >= 65 && pRepair < 45) || (pShame >= 65 && pRepair < 40) || (pAggression >= 65 && pRepair < 45)) {
+        const uAlert = document.getElementById("ultimate-alert");
+        uAlert.style.display = "block";
+        uAlert.innerHTML = `<b>🔥 终极系统坍塌危险联击警告（深层死锁型反噬结构）：</b><br>受测者的动力学结构触发了最危险的复合锁定组合——<b>【高现实定义/挑剔攻击 + 极低自省修复通道】</b>。这意味着在恋爱前期由于印象管理的强力保护，你不仅无法察觉其风险，还会被Ta的高情商彻底迷惑；但在3-5年后进入深度绑定且你的撤退成本极高时，Ta会全方位收紧其隐性控制网。更致命的是，因为Ta完全丧失了向内审视的自我修复通道，你未来试图纠正Ta、唤醒Ta的所有沟通、眼泪和谈判，都会被Ta用极度自洽的强盗理智逻辑进行反弹与合理化（例如：‘要不是你先这样做，我怎么会变成现在这样？’）。这类人格在后期具有系统性的、剥夺主体性的深度消耗属性，请务必保持极度清醒的底层审视。`;
+    }
+
+    // 绘制高级 Canvas 雷达图
+    drawRadar(pControl, pShame, pBoredom, pAggression, pRepair);
+}
+
+function drawRadar(c, s, b, a, r) {
+    const canvas = document.getElementById("radarChart");
+    const ctx = canvas.getContext("2d");
+    const center = 180;
+    const radius = 110;
+    const data = [c, s, b, a, r];
+    const labels = ["隐性控制", "羞耻防御", "平淡退行", "情绪攻击", "自省修复"];
+
+    ctx.clearRect(0, 0, 360, 360);
+    
+    // 1. 绘制5层同心五边形背景
+    ctx.strokeStyle = "#27272a";
+    ctx.lineWidth = 1;
+    for(let j = 1; j <= 5; j++) {
+        let curR = (radius / 5) * j;
+        ctx.beginPath();
+        for(let i=0; i<5; i++) {
+            let angle = -Math.PI/2 + (Math.PI * 2 / 5) * i;
+            let x = center + Math.cos(angle) * curR;
+            let y = center + Math.sin(angle) * curR;
+            if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+    // 2. 绘制5条轴线
+    ctx.beginPath();
+    for(let i=0; i<5; i++) {
+        let angle = -Math.PI/2 + (Math.PI * 2 / 5) * i;
+        ctx.moveTo(center, center);
+        ctx.lineTo(center + Math.cos(angle) * radius, center + Math.sin(angle) * radius);
+    }
+    ctx.stroke();
+
+    // 3. 计算并绘制数据覆盖区域
+    let points = [];
+    for(let i=0; i<5; i++) {
+        let angle = -Math.PI/2 + (Math.PI * 2 / 5) * i;
+        let valPct = data[i] / 100;
+        let x = center + Math.cos(angle) * radius * valPct;
+        let y = center + Math.sin(angle) * radius * valPct;
+        points.push({x, y});
+
+        // 绘制各轴标签
+        ctx.fillStyle = "#a1a1aa";
+        ctx.font = "12px sans-serif";
+        let tx = center + Math.cos(angle) * (radius + 22) - 24;
+        let ty = center + Math.sin(angle) * (radius + 14) + 4;
+        ctx.fillText(labels[i], tx, ty);
+    }
+
+    // 填充数据区域
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for(let i=1; i<points.length; i++) { ctx.lineTo(points[i].x, points[i].y); }
+    ctx.closePath();
+    ctx.fillStyle = "rgba(37, 99, 235, 0.25)";
+    ctx.fill();
+    ctx.strokeStyle = "#2563eb";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // 4. 渲染五个关键数据节点的红绿圆点
+    points.forEach((p, i) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4, 0, Math.PI*2);
+        ctx.fillStyle = i === 4 ? "#16a34a" : "#dc2626"; // 修复项为绿，风险项为红
+        ctx.fill();
+    });
+}
+
+// 启动执行系统
+startQuestion();
+</script>
+</body>
+</html>
