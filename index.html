@@ -681,6 +681,12 @@
     </div>
     <div class="result-restart">
       <button class="btn-start" onclick="restartQuiz()">重新测试</button>
+      <button class="btn-start btn-share" onclick="submitResult()" style="margin-top:16px;background:linear-gradient(135deg,var(--gold-dim),var(--gold))">提交并生成分享链接</button>
+      <div id="shareLink" style="display:none;margin-top:20px;padding:16px;background:var(--surface2);border-radius:12px;border:1px solid var(--border)">
+        <p style="color:var(--cream);font-size:14px;margin-bottom:8px">你的结果链接：</p>
+        <input type="text" id="shareUrl" readonly style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--gold);font-size:13px;cursor:pointer" onclick="this.select();document.execCommand('copy')">
+        <p style="color:var(--text-dim);font-size:12px;margin-top:8px">点击链接可复制，分享给别人即可</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1528,6 +1534,105 @@ function renderConclusion(norm, risk) {
 
   document.getElementById('conclusionBox').innerHTML = html;
 }
+
+// ── SUBMIT & SHARE ────────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = 'GOOGLE_APPS_SCRIPT_URL_PLACEHOLDER';
+
+function submitResult() {
+  const { raw, norm } = computeScores();
+  const risk = overallRisk(norm);
+  
+  // Build data
+  const data = {
+    timestamp: new Date().toISOString(),
+    riskScore: risk,
+    riskLevel: document.getElementById('resultTitle').textContent,
+    dimensions: norm,
+    rawScores: raw,
+    answers: answers
+  };
+  
+  // Encode to base64 for URL sharing
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const shareUrl = `${window.location.origin}${window.location.pathname}#result=${encoded}`;
+  
+  // Show share link immediately
+  document.getElementById('shareUrl').value = shareUrl;
+  document.getElementById('shareLink').style.display = 'block';
+  
+  // Also submit to Google Sheets if URL is configured
+  if (APPS_SCRIPT_URL !== 'GOOGLE_APPS_SCRIPT_URL_PLACEHOLDER') {
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(() => {}); // Silent fail for Sheets, share link always works
+  }
+}
+
+// Load shared result from URL
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash.startsWith('#result=')) {
+    try {
+      const encoded = hash.substring(8);
+      const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+      
+      // Show result section
+      document.getElementById('cover').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      
+      // Fill in the result data
+      let titleColor = '#c9a84c';
+      if (data.riskScore <= 22) titleColor = '#6fa87a';
+      else if (data.riskScore <= 42) titleColor = '#a8a06f';
+      else if (data.riskScore <= 62) titleColor = '#c9a84c';
+      else if (data.riskScore <= 80) titleColor = '#c47e3a';
+      else titleColor = '#c24b3a';
+      
+      document.getElementById('resultTitle').innerHTML = `<span style="color:${titleColor}">${data.riskLevel}</span>`;
+      document.getElementById('scoreNum').textContent = data.riskScore;
+      document.getElementById('scoreCircle').style.setProperty('--pct', `${data.riskScore * 3.6}deg`);
+      
+      // Render dimensions
+      const container = document.getElementById('dimBars');
+      const dimMeta = [
+        { key: 'control', label: '权力 / 控制', positive: false },
+        { key: 'shame', label: '羞耻防御', positive: false },
+        { key: 'aggression', label: '攻击性', positive: false },
+        { key: 'splitting', label: '分裂倾向', positive: false },
+        { key: 'abandonmentFear', label: '被抛弃恐惧', positive: false },
+        { key: 'differentiation', label: '自我分化', positive: true },
+        { key: 'emotionalAvailability', label: '情感可及性', positive: true },
+        { key: 'repair', label: '修复能力', positive: true }
+      ];
+      container.innerHTML = '';
+      dimMeta.forEach(d => {
+        const val = data.dimensions[d.key] || 0;
+        const color = d.positive
+          ? `hsl(${80 + val * 0.6}, 50%, 50%)`
+          : `hsl(${50 - val * 0.3}, 60%, 55%)`;
+        container.innerHTML += `
+          <div class="dim-row">
+            <div class="dim-name">${d.label}</div>
+            <div class="dim-bar-bg">
+              <div class="dim-bar-fill" style="width:${val}%; background: linear-gradient(to right, ${color}99, ${color})"></div>
+            </div>
+            <div class="dim-val">${val}</div>
+          </div>
+        `;
+      });
+      
+      // Hide restart button for shared results
+      document.querySelector('.result-restart').innerHTML = '<p style="color:var(--text-dim);font-size:13px;text-align:center">这是他人的测试结果 <a href="." style="color:var(--gold)">我也想测一测</a></p>';
+      
+    } catch (e) {
+      console.error('Failed to load shared result:', e);
+    }
+  }
+});
 </script>
 </body>
 </html>
+
