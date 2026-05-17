@@ -697,317 +697,102 @@
 //             emotionalAvailability, splitting, abandonmentFear, repair
 
 const questions = [
-  // 1
+  // ── 结构1：隐性权力结构 ──
+  // 1. 显性控制
   {
-    module: "日常相处",
-    text: "你在整理家里东西的时候，发现伴侣把你常用的东西换了位置，但没告诉你。你最可能的反应是？",
+    module: "权力结构",
+    text: "伴侣做了一个你不同意的决定（比如换工作、买大件东西），你会？",
     options: [
-      { text: "找到之后放回原来的地方，下次告诉他/她我的习惯", w: {control:1, differentiation:1} },
-      { text: "有些困惑，但不会提，因为觉得说出来显得小题大做", w: {shame:2, repair:-1} },
-      { text: "有点不舒服，想知道为什么不先问我一下", w: {control:2, aggression:1} },
-      { text: "觉得无所谓，反正放哪都找得到", w: {differentiation:2} }
+      { text: "尊重他/她的决定，这是他/她的人生", w: {control:0, differentiation:2} },
+      { text: "会表达我的看法，但最终由他/她决定", w: {control:1, differentiation:1} },
+      { text: "会反复劝说，直到他/她改变主意", w: {control:3, differentiation:-1} },
+      { text: "会觉得他/她不听我的就是不重视这段关系", w: {control:4, splitting:1, abandonment:1} }
     ]
   },
-  // 2
+  // 2. 隐性控制
   {
-    module: "边界感知",
-    text: "伴侣去和朋友吃饭，你不认识那些人。饭局比预计晚了一个小时才结束，期间只回了你一条消息。你的感受更接近哪种？",
+    module: "权力结构",
+    text: "你觉得伴侣某个习惯不好（比如熬夜、吃垃圾食品），你会？",
     options: [
-      { text: "偶尔看一眼手机，但没有特别在意，他/她忙就是忙", w: {abandonmentFear:0, differentiation:2} },
-      { text: "有点担心，回了消息但在心里提醒自己不要催", w: {abandonmentFear:1, shame:1} },
-      { text: "越来越不安，开始想对方是不是不想回来了", w: {abandonmentFear:3, splitting:1} },
-      { text: "回了消息没反应，觉得有点不受重视", w: {control:1, abandonmentFear:2, aggression:1} }
+      { text: "提一次建议，然后尊重他/她的选择", w: {control:0, differentiation:2} },
+      { text: "会经常提醒，因为我真的很在意他/她的健康", w: {control:2, emotionalAvailability:1} },
+      { text: "会帮他/她安排好作息，告诉他/她应该怎么做", w: {control:3, differentiation:-1} },
+      { text: "如果他/她不改，我会觉得他/她不够爱我", w: {control:4, conditionalLove:2, splitting:1} }
     ]
   },
-  // 3
+  // 3. 被需要感依赖
   {
-    module: "冲突反应",
-    text: "你和伴侣为某件事发生了争执，说了一些重话。事后你会？",
+    module: "权力结构",
+    text: "伴侣开始变得更加独立，很多事情不再需要你的帮助。你感觉到的是？",
     options: [
-      { text: "等自己冷静下来之后，主动去道歉，说清楚自己当时的想法", w: {repair:3, shame:1} },
-      { text: "等对方先道歉，觉得自己也有委屈在", w: {control:1, repair:0} },
-      { text: "假装什么都没发生，期待关系自然恢复", w: {shame:2, aggression:1, repair:-1} },
-      { text: "心里过不去，但不知道怎么开口，可能用行动来弥补", w: {shame:3, repair:1} }
+      { text: "为他/她感到高兴，这是好事", w: {control:0, differentiation:2} },
+      { text: "欣慰，但也有一点不知道自己的位置在哪里", w: {control:1, emotionalAvailability:1} },
+      { text: "有点失落，觉得被'需要'让我很有安全感", w: {control:2, abandonmentFear:2} },
+      { text: "感到不安，开始想对方是不是不再需要这段关系了", w: {control:3, abandonmentFear:3, splitting:1} }
     ]
   },
-  // 4
+  // 4. 边界侵蚀
   {
-    module: "独立与依赖",
-    text: "伴侣告诉你，他/她想利用周末独自去旅行三天，说需要一些个人空间。你的内心反应是？",
+    module: "权力结构",
+    text: "伴侣想保留一些个人隐私（比如不告诉你手机密码、不分享所有社交账号）。你的感受是？",
     options: [
-      { text: "觉得挺好的，自己也可以安排一些事情做", w: {differentiation:2, abandonmentFear:0} },
-      { text: "能理解，但心里有一点失落感", w: {abandonmentFear:1, differentiation:1} },
-      { text: "有点担心，忍不住问他/她是不是对我有什么不满", w: {abandonmentFear:3, control:1} },
-      { text: "觉得有些奇怪，两个人在一起为什么需要独自旅行", w: {control:2, differentiation:-1, abandonmentFear:2} }
+      { text: "完全理解，每个人都需要私人空间", w: {control:0, differentiation:2} },
+      { text: "能接受，但希望他/她不会对我隐瞒重要的事", w: {control:1, differentiation:1} },
+      { text: "会有点不安，想知道他/她在隐瞒什么", w: {control:2, abandonmentFear:2} },
+      { text: "会觉得如果他/她真的爱我，就不应该有秘密", w: {control:4, differentiation:-1, splitting:1} }
     ]
   },
-  // 5
+
+  // ── 结构2：羞耻-防御系统 ──
+  // 5. 羞耻防御强度
   {
-    module: "情感承接",
-    text: "伴侣在和你说话时突然哽咽了，没有解释原因，只是沉默着。你会怎么做？",
+    module: "羞耻防御",
+    text: "你在伴侣面前做了一件让自己觉得很窘的事（比如说错话、表现失误）。你的第一反应是？",
     options: [
-      { text: "安静地靠近他/她，不说话，只是陪着", w: {emotionalAvailability:3} },
-      { text: "问'怎么了'，想帮他/她解决问题", w: {emotionalAvailability:2, control:1} },
-      { text: "感到不知所措，默默等对方先开口", w: {emotionalAvailability:1, shame:2} },
-      { text: "有点不自在，想说点什么来缓解气氛", w: {emotionalAvailability:0, aggression:1} }
+      { text: "笑着说'哎我真的太糟了'，然后就过去了", w: {shame:0} },
+      { text: "有点不舒服，但能承受，不会太在意", w: {shame:1} },
+      { text: "内心很难受，但装作没什么事", w: {shame:3} },
+      { text: "想解释清楚，让对方知道这不是我平时的样子", w: {shame:2, control:1} }
     ]
   },
-  // 6
+  // 6. 自我暴露耐受度
   {
-    module: "权力感知",
-    text: "在你们日常的决策中（比如去哪吃饭、怎么安排周末），通常是谁主导？",
+    module: "羞耻防御",
+    text: "伴侣问你'你今天过得怎么样'，你更可能？",
     options: [
-      { text: "大部分时候是对方，我比较随意", w: {control:-1, differentiation:1} },
-      { text: "我们轮流来，或者一起商量", w: {control:0, differentiation:2} },
-      { text: "我更常提出方案，对方通常同意", w: {control:2} },
-      { text: "我比较在意这些细节，所以通常由我来决定", w: {control:3, differentiation:-1} }
+      { text: "会分享具体的事情和感受，好的坏的都会说", w: {shame:0, emotionalAvailability:2} },
+      { text: "会说一些，但不会说太私人的部分", w: {shame:1, emotionalAvailability:1} },
+      { text: "说'还行'或'挺好的'，不太想展开", w: {shame:2, emotionalAvailability:0} },
+      { text: "会觉得被问太多很烦，想一个人待着", w: {shame:3, aggression:1} }
     ]
   },
-  // 7
+  // 7. 脆弱性恐惧
   {
-    module: "脆弱表达",
-    text: "你在某件事上失败了，感到很受挫，心情很差。面对伴侣，你更可能？",
+    module: "羞耻防御",
+    text: "你很需要对方，但说出'我需要你'让你感觉很难开口。这种困难更像哪种？",
     options: [
-      { text: "直接告诉他/她我现在很难受，需要他/她陪着我", w: {shame:0, emotionalAvailability:3} },
-      { text: "说'我有点累'，但不会详细说发生了什么", w: {shame:2, emotionalAvailability:1} },
-      { text: "说'没事'，然后自己处理，不想让对方担心", w: {shame:3, emotionalAvailability:0} },
-      { text: "会说，但会先整理好情绪再说", w: {shame:1, emotionalAvailability:2} }
+      { text: "其实不难，这是很正常的表达", w: {shame:0} },
+      { text: "会说，但要想一想才能说出口", w: {shame:1} },
+      { text: "很难说，担心显得自己太软弱或者太依赖", w: {shame:3, differentiation:-1} },
+      { text: "几乎不会说，我更习惯用行动表达而不是语言", w: {shame:2, emotionalAvailability:1} }
     ]
   },
-  // 8
+
+  // ── 结构3：情绪耐受与攻击模式 ──
+  // 8. 外显攻击
   {
-    module: "价值需求",
-    text: "你做了一件对你来说很重要的事，但伴侣当天没有注意到，也没有主动问。你的感受是？",
-    options: [
-      { text: "会自己提起来分享，觉得告诉他/她是很自然的事", w: {shame:0, emotionalAvailability:2} },
-      { text: "有点失落，但不会主动说，等对方问起来", w: {splitting:1, shame:2} },
-      { text: "感到不被重视，甚至有点生气", w: {control:2, splitting:2, aggression:1} },
-      { text: "会开始怀疑他/她是否真的在乎我", w: {splitting:3, abandonmentFear:2, control:1} }
-    ]
-  },
-  // 9
-  {
-    module: "冲突模式",
+    module: "攻击模式",
     text: "和伴侣吵架时，你描述自己更像哪种？",
     options: [
       { text: "会直接说清楚自己的感受和立场，可能情绪比较激动", w: {aggression:2, repair:1} },
       { text: "会保持冷静，用逻辑分析问题", w: {control:2, emotionalAvailability:0} },
       { text: "会先沉默，等自己冷静了再谈", w: {shame:1, aggression:1, repair:1} },
-      { text: "想回避，觉得吵架没有意义，能忍就忍", w: {shame:2, aggression:-1, repair:-1} }
+      { text: "会说一些伤人的话，事后又后悔", w: {aggression:3, shame:1} }
     ]
   },
-  // 10
+  // 9. 隐性攻击（被动攻击）
   {
-    module: "评价稳定性",
-    text: "当你回想起过去的恋爱对象，你的描述方式更接近哪种？",
-    options: [
-      { text: "他/她有很多优点，但也有些地方确实不合适", w: {splitting:0, differentiation:2} },
-      { text: "那时候觉得他/她很好，现在看来其实有很多问题", w: {splitting:2} },
-      { text: "他/她就是一个很糟糕的人，当时没看清楚", w: {splitting:3, aggression:1} },
-      { text: "我们彼此都有错，但我也从中成长了", w: {shame:1, differentiation:2, repair:2} }
-    ]
-  },
-  // 11
-  {
-    module: "亲密节奏",
-    text: "你觉得在亲密关系中，多久联系一次才是'正常'的？",
-    options: [
-      { text: "保持日常联系，但不需要时刻回应", w: {abandonmentFear:1, control:0} },
-      { text: "每天都应该主动联系，这是维系感情的方式", w: {abandonmentFear:2, control:1} },
-      { text: "不用固定，想联系就联系，不联系也没关系", w: {differentiation:2, abandonmentFear:0} },
-      { text: "对方应该更主动，主动联系是关心的表现，不主动就是不在乎", w: {control:3, abandonmentFear:3, splitting:1} }
-    ]
-  },
-  // 12
-  {
-    module: "情绪管理",
-    text: "你心情很差，但原因很难解释，或者你自己也说不清楚。伴侣注意到了，问你'怎么了'。你会？",
-    options: [
-      { text: "说'我现在情绪不好，但不知道为什么，先给我点时间'", w: {shame:1, emotionalAvailability:2} },
-      { text: "说'没事'，然后自己慢慢消化", w: {shame:3, emotionalAvailability:0} },
-      { text: "会尝试解释，哪怕说得不清楚", w: {shame:0, emotionalAvailability:3} },
-      { text: "觉得被追问让我更烦，想一个人待着", w: {aggression:1, shame:2, differentiation:1} }
-    ]
-  },
-  // 13
-  {
-    module: "关系期待",
-    text: "你认为一段长期关系中，哪种状态是最'正常'的？",
-    options: [
-      { text: "有平淡，有波折，两个人都在变化，但仍然选择在一起", w: {splitting:0, repair:2} },
-      { text: "保持最初的感觉，如果感觉变了，说明感情变淡了", w: {splitting:3, abandonment:2} },
-      { text: "相互理解，少争吵，能一起面对生活中的问题", w: {differentiation:2, repair:2} },
-      { text: "对方能持续让我感到被重视和特别", w: {control:2, splitting:2, abandonment:1} }
-    ]
-  },
-  // 14
-  {
-    module: "信任模式",
-    text: "你发现伴侣手机上有一个你不认识的异性名字，而且最近联系比较频繁。你会怎么做？",
-    options: [
-      { text: "直接问他/她是谁，觉得可以直接沟通", w: {control:1, repair:1} },
-      { text: "觉得不安，但会提醒自己不要乱想，先观察", w: {abandonmentFear:2, shame:1} },
-      { text: "想知道，但不会直接问，可能会从其他途径了解", w: {control:3, shame:2} },
-      { text: "觉得我们之间应该互相信任，不去追问", w: {differentiation:2, control:-1} }
-    ]
-  },
-  // 15
-  {
-    module: "羞耻反应",
-    text: "你在伴侣面前做了一件让自己觉得很窘的事（比如说错话、表现失误）。你的第一反应是？",
-    options: [
-      { text: "笑着说'哎我真的太糟了'，然后就过去了", w: {shame:0} },
-      { text: "内心很难受，但装作没什么事", w: {shame:3} },
-      { text: "想解释清楚，让对方知道这不是我平时的样子", w: {shame:2, control:1} },
-      { text: "有点不舒服，但能承受，不会太在意", w: {shame:1} }
-    ]
-  },
-  // 16
-  {
-    module: "独立性边界",
-    text: "伴侣有一个你不太了解、也不太喜欢的爱好，他/她花了不少时间在上面。你会？",
-    options: [
-      { text: "尊重他/她的兴趣，偶尔关心一下就好", w: {differentiation:2, control:0} },
-      { text: "试着了解一下，看看能不能也参与进来", w: {differentiation:1, emotionalAvailability:2} },
-      { text: "觉得花太多时间在上面挺没意思的，会表达我的看法", w: {control:2, differentiation:-1} },
-      { text: "担心这会占用我们在一起的时间，有些不安", w: {abandonmentFear:2, control:1} }
-    ]
-  },
-  // 17
-  {
-    module: "归因模式",
-    text: "一段过去的关系结束了，你通常怎么理解这段关系为什么没能走下去？",
-    options: [
-      { text: "两个人都有问题，我们不合适", w: {differentiation:2, shame:1} },
-      { text: "我当时做了一些让对方不舒服的事，对此我有责任", w: {repair:2, shame:1} },
-      { text: "对方的问题更多，他/她不够珍惜这段关系", w: {splitting:2, control:1} },
-      { text: "我总是遇到不合适的人，可能我眼光有问题", w: {shame:3, splitting:1, externalAttribution:1} }
-    ]
-  },
-  // 18
-  {
-    module: "控制与关心",
-    text: "你很在意伴侣的健康，他/她最近睡眠不好、饮食也不规律。你的应对方式是？",
-    options: [
-      { text: "关心地问问他/她，看看有没有什么我能帮到的", w: {emotionalAvailability:2, control:0} },
-      { text: "帮他/她安排好作息，告诉他/她应该怎么做", w: {control:3} },
-      { text: "提到一次，然后尊重他/她自己的选择", w: {differentiation:2, control:1} },
-      { text: "担心但不知道说什么，只是默默关注", w: {emotionalAvailability:1, shame:2} }
-    ]
-  },
-  // 19
-  {
-    module: "情绪共鸣",
-    text: "伴侣分享了一件在工作上让他/她很受挫的事。你的第一反应是？",
-    options: [
-      { text: "听完之后，问他/她现在感觉怎么样，想不想聊聊", w: {emotionalAvailability:3} },
-      { text: "帮他/她分析问题出在哪，给出一些建议", w: {emotionalAvailability:1, control:1} },
-      { text: "说'你已经很努力了'，然后帮他/她转移注意力", w: {emotionalAvailability:2} },
-      { text: "不太知道说什么，怕说错，所以主要是听", w: {emotionalAvailability:1, shame:2} }
-    ]
-  },
-  // 20
-  {
-    module: "边界感知",
-    text: "你发现你们两个在某个重要问题上有根本性的价值观差异（比如对生育、金钱的态度）。你会？",
-    options: [
-      { text: "认真谈一次，看看有没有办法达成共识", w: {repair:2, differentiation:1} },
-      { text: "觉得这是大问题，对关系的未来感到担忧", w: {abandonment:2, splitting:1} },
-      { text: "觉得只要感情好，这些以后慢慢磨合就行", w: {differentiation:1, splitting:1} },
-      { text: "希望对方能为了我们的关系调整他/她的想法，否则就是不够爱我", w: {control:4, differentiation:-1, splitting:1} }
-    ]
-  },
-  // 21
-  {
-    module: "自我感知",
-    text: "你认为在亲密关系中，你更容易变成哪种状态？",
-    options: [
-      { text: "比较依赖对方，会很在意对方的反应和评价", w: {abandonmentFear:2, differentiation:-1} },
-      { text: "保持自我，但有时会因为担心对方而让步", w: {differentiation:1, shame:1} },
-      { text: "比较独立，可能有时候让对方觉得我不够需要他/她", w: {emotionalAvailability:1, differentiation:2} },
-      { text: "会不自觉地想主导或影响关系的走向", w: {control:3} }
-    ]
-  },
-  // 22
-  {
-    module: "修复能力",
-    text: "你和伴侣有一次严重争吵，两个人都说了很伤人的话。接下来的几天关系非常冷淡。这时候你会？",
-    options: [
-      { text: "主动打破僵局，可能是发一条消息或者做一件暖心的事", w: {repair:3, shame:1} },
-      { text: "等对方先开口，觉得这次自己委屈比较大", w: {control:1, repair:0} },
-      { text: "继续冷战，等时间来冲淡这件事", w: {repair:-2, aggression:1} },
-      { text: "很想和解，但不知道怎么开始，会有点焦虑", w: {repair:1, shame:2, abandonmentFear:1} }
-    ]
-  },
-  // 23
-  {
-    module: "被需要感",
-    text: "伴侣开始变得更加独立，很多事情不再需要你的帮助，他/她过得很好。你感觉到的是？",
-    options: [
-      { text: "为他/她感到高兴，这是好事", w: {differentiation:2, control:-1} },
-      { text: "欣慰，但也有一点不知道自己的位置在哪里", w: {control:1, emotionalAvailability:1} },
-      { text: "有点失落，觉得被他/她'需要'让我很有安全感", w: {control:2, abandonmentFear:2} },
-      { text: "感到不安，开始想对方是不是不再需要这段关系了", w: {control:3, abandonmentFear:3, splitting:1} }
-    ]
-  },
-  // 24
-  {
-    module: "现实定义",
-    text: "你和伴侣对同一件事的记忆或看法不一样（比如你们是怎么认识的，或者某次争吵说了什么）。你通常会？",
-    options: [
-      { text: "觉得可能每个人记忆的角度不同，两种说法可能都有道理", w: {differentiation:2, control:-1} },
-      { text: "坚持自己的记忆是准确的，会想说服对方", w: {control:2, differentiation:-1} },
-      { text: "觉得细节不重要，重要的是我们现在怎么看这件事", w: {repair:1, differentiation:1} },
-      { text: "会让步，因为不想再争这种事", w: {shame:2, repair:0} }
-    ]
-  },
-  // 25
-  {
-    module: "情感节奏",
-    text: "热恋之后，你们的关系进入了一段相对平淡的时期。你对这种平淡的感受是？",
-    options: [
-      { text: "觉得这是正常的，关系稳定下来了", w: {differentiation:2, splitting:0} },
-      { text: "有时会担心感情是不是在淡化", w: {abandonmentFear:2, splitting:1} },
-      { text: "觉得刺激少了，开始想主动制造一些新鲜感", w: {control:1, splitting:1} },
-      { text: "觉得平淡让我有些不安，不确定对方是否还在意", w: {abandonmentFear:3, splitting:2} }
-    ]
-  },
-  // 26
-  {
-    module: "边界测试",
-    text: "你和伴侣关系不太好的那段时间，你有没有过以下想法或行为？（选最接近的）",
-    options: [
-      { text: "没有，我觉得直接沟通比'试探'更有用", w: {repair:2, control:0} },
-      { text: "曾经想过如果我'消失'一段时间，他/她会不会着急", w: {abandonmentFear:3, control:2} },
-      { text: "偶尔会故意慢回复，想看看他/她的反应", w: {control:2, aggression:1} },
-      { text: "有时候会说些重话来测试他/她到底有多在乎", w: {control:3, aggression:2, abandonment:2} }
-    ]
-  },
-  // 27
-  {
-    module: "压力反应",
-    text: "当你压力很大、状态很差的时候，你在关系中更容易出现哪种模式？",
-    options: [
-      { text: "需要更多来自对方的关心和陪伴", w: {abandonmentFear:2, emotionalAvailability:1} },
-      { text: "会变得比较沉默，不想给对方增加负担", w: {shame:3, emotionalAvailability:0} },
-      { text: "更容易被小事激怒，对对方不耐烦", w: {aggression:3, control:1} },
-      { text: "状态不好时更需要一个人待着恢复能量", w: {differentiation:2, shame:1} }
-    ]
-  },
-  // 28
-  {
-    module: "评价波动",
-    text: "你对一段关系的评价，是否会因为一件具体的事情而整体改变？",
-    options: [
-      { text: "不会，一件事不代表一段关系", w: {splitting:0, differentiation:2} },
-      { text: "有时候会，如果那件事触碰了某个我在意的点", w: {splitting:2, abandonment:1} },
-      { text: "会，我会因为一件事开始重新审视整段关系", w: {splitting:3, abandonment:2} },
-      { text: "会，而且一旦开始怀疑就很难停止", w: {splitting:4, abandonment:3, control:1} }
-    ]
-  },
-  // 29
-  {
-    module: "情感降温",
+    module: "攻击模式",
     text: "当你对一个人感到失望或者不满时，你更容易表现出哪种行为？",
     options: [
       { text: "直接说出来，哪怕会引起冲突", w: {aggression:2, repair:1} },
@@ -1016,7 +801,31 @@ const questions = [
       { text: "用一些方式暗示对方，期望他/她能自己意识到", w: {control:2, aggression:1, shame:1} }
     ]
   },
-  // 30
+  // 10. 情绪撤离
+  {
+    module: "攻击模式",
+    text: "关系中发生了一次比较深的伤害（不是不可原谅的那种），你选择继续在一起。之后你会？",
+    options: [
+      { text: "认真谈过，解决了，然后真的放下了", w: {repair:3} },
+      { text: "表面放下了，但心里还是有些什么残留着", w: {shame:2, repair:1} },
+      { text: "会变得更小心，对这段关系多了些距离感", w: {abandonmentFear:2, emotionalAvailability:1} },
+      { text: "会慢慢从这段关系中撤退一部分自己", w: {emotionalAvailability:0, splitting:2, repair:-1} }
+    ]
+  },
+  // 11. 过度理性化
+  {
+    module: "攻击模式",
+    text: "伴侣因为一件和你无关的事情情绪很差，向你抱怨。你最自然的回应是？",
+    options: [
+      { text: "先听他/她说，然后问他/她现在想要什么——听还是建议", w: {emotionalAvailability:3} },
+      { text: "帮他/她分析问题出在哪里，提供解决思路", w: {emotionalAvailability:1, control:1} },
+      { text: "说'我理解你的感受'，然后陪着他/她", w: {emotionalAvailability:2} },
+      { text: "觉得与其抱怨，不如想想怎么解决", w: {emotionalAvailability:0, control:2} }
+    ]
+  },
+
+  // ── 结构4：自我-他者分化度 ──
+  // 12. 自我分化水平
   {
     module: "自我分化",
     text: "你们两个意见不同，而且对方非常坚持自己的看法。你更可能？",
@@ -1027,31 +836,31 @@ const questions = [
       { text: "先退一步，但心里还是不太认同", w: {shame:1, differentiation:1} }
     ]
   },
-  // 31
+  // 13. 现实定义权
   {
-    module: "情感撤离",
-    text: "关系中发生了一次比较深的伤害（不是不可原谅的那种），你选择继续在一起。之后你会？",
+    module: "自我分化",
+    text: "你和伴侣对同一件事的记忆或看法不一样（比如你们是怎么认识的，或者某次争吵说了什么）。你通常会？",
     options: [
-      { text: "认真谈过，解决了，然后真的放下了", w: {repair:3} },
-      { text: "表面放下了，但心里还是有些什么残留着", w: {shame:2, repair:1} },
-      { text: "会变得更小心，对这段关系多了些距离感", w: {abandonmentFear:2, emotionalAvailability:1} },
-      { text: "会慢慢从这段关系中撤退一部分自己", w: {emotionalAvailability:0, splitting:2, repair:-1} }
+      { text: "觉得可能每个人记忆的角度不同，两种说法可能都有道理", w: {differentiation:2, control:0} },
+      { text: "坚持自己的记忆是准确的，会想说服对方", w: {control:2, differentiation:-1} },
+      { text: "觉得细节不重要，重要的是我们现在怎么看这件事", w: {repair:1, differentiation:1} },
+      { text: "会让步，因为不想再争这种事", w: {shame:2, repair:0} }
     ]
   },
-  // 32
+  // 14. 外归因倾向
   {
-    module: "过度理性化",
-    text: "伴侣因为一件和你无关的事情情绪很差，向你抱怨。你最自然的回应是？",
+    module: "自我分化",
+    text: "一段过去的关系结束了，你通常怎么理解这段关系为什么没能走下去？",
     options: [
-      { text: "先听他/她说，然后问他/她现在想要什么——听还是建议", w: {emotionalAvailability:3} },
-      { text: "帮他/她分析问题出在哪里，提供解决思路", w: {emotionalAvailability:1, control:1} },
-      { text: "说'我理解你的感受'，然后陪着他/她", w: {emotionalAvailability:2} },
-      { text: "觉得与其抱怨，不如想想怎么解决", w: {emotionalAvailability:0, control:2} }
+      { text: "两个人都有问题，我们不合适", w: {differentiation:2, shame:1} },
+      { text: "我当时做了一些让对方不舒服的事，对此我有责任", w: {repair:2, shame:1} },
+      { text: "对方的问题更多，他/她不够珍惜这段关系", w: {splitting:2, control:1} },
+      { text: "我总是遇到不合适的人，可能我眼光有问题", w: {shame:3, splitting:1} }
     ]
   },
-  // 33
+  // 15. 条件性爱
   {
-    module: "条件性爱",
+    module: "自我分化",
     text: "你对伴侣某个根深蒂固的习惯感到不满。经过多次沟通，他/她表示很难改变。你会？",
     options: [
       { text: "接受这是他/她的一部分，决定是否还要继续", w: {differentiation:2, splitting:0} },
@@ -1060,29 +869,120 @@ const questions = [
       { text: "开始重新审视我们是否真的合适，甚至考虑离开", w: {differentiation:2, splitting:2, abandonment:1} }
     ]
   },
-  // 34
+
+  // ── 维度5：情感可及性 ──
+  // 16. 情感回应
   {
-    module: "分离焦虑",
+    module: "情感可及性",
+    text: "伴侣在和你说话时突然哽咽了，没有解释原因，只是沉默着。你会怎么做？",
+    options: [
+      { text: "安静地靠近他/她，不说话，只是陪着", w: {emotionalAvailability:3} },
+      { text: "问'怎么了'，想帮他/她解决问题", w: {emotionalAvailability:2, control:1} },
+      { text: "感到不知所措，默默等对方先开口", w: {emotionalAvailability:1, shame:2} },
+      { text: "有点不自在，想说点什么来缓解气氛", w: {emotionalAvailability:0, aggression:1} }
+    ]
+  },
+  // 17. 脆弱承接
+  {
+    module: "情感可及性",
+    text: "伴侣分享了一件在工作上让他/她很受挫的事。你的第一反应是？",
+    options: [
+      { text: "听完之后，问他/她现在感觉怎么样，想不想聊聊", w: {emotionalAvailability:3} },
+      { text: "帮他/她分析问题出在哪，给出一些建议", w: {emotionalAvailability:1, control:1} },
+      { text: "说'你已经很努力了'，然后帮他/她转移注意力", w: {emotionalAvailability:2} },
+      { text: "不太知道说什么，怕说错，所以主要是听", w: {emotionalAvailability:1, shame:2} }
+    ]
+  },
+
+  // ── 维度6：分裂倾向 ──
+  // 18. 评价波动
+  {
+    module: "分裂倾向",
+    text: "你对一段关系的评价，是否会因为一件具体的事情而整体改变？",
+    options: [
+      { text: "不会，一件事不代表一段关系", w: {splitting:0, differentiation:2} },
+      { text: "有时候会，如果那件事触碰了某个我在意的点", w: {splitting:2, abandonment:1} },
+      { text: "会，我会因为一件事开始重新审视整段关系", w: {splitting:3, abandonment:2} },
+      { text: "会，而且一旦开始怀疑就很难停止", w: {splitting:4, abandonment:3, control:1} }
+    ]
+  },
+  // 19. 理想化-贬低
+  {
+    module: "分裂倾向",
+    text: "当你回想起过去的恋爱对象，你的描述方式更接近哪种？",
+    options: [
+      { text: "他/她有很多优点，但也有些地方确实不合适", w: {splitting:0, differentiation:2} },
+      { text: "那时候觉得他/她很好，现在看来其实有很多问题", w: {splitting:2} },
+      { text: "他/她就是一个很糟糕的人，当时没看清楚", w: {splitting:3, aggression:1} },
+      { text: "我们彼此都有错，但我也从中成长了", w: {shame:1, differentiation:2, repair:2} }
+    ]
+  },
+
+  // ── 维度7：退行深度 ──
+  // 20. 脆弱展现
+  {
+    module: "退行深度",
+    text: "你在某件事上失败了，感到很受挫，心情很差。面对伴侣，你更可能？",
+    options: [
+      { text: "直接告诉他/她我现在很难受，需要他/她陪着我", w: {shame:0, emotionalAvailability:3} },
+      { text: "说'我有点累'，但不会详细说发生了什么", w: {shame:2, emotionalAvailability:1} },
+      { text: "说'没事'，然后自己处理，不想让对方担心", w: {shame:3, emotionalAvailability:0} },
+      { text: "会说，但会先整理好情绪再说", w: {shame:1, emotionalAvailability:2} }
+    ]
+  },
+
+  // ── 维度8：被抛弃恐惧 ──
+  // 21. 回复焦虑
+  {
+    module: "被抛弃恐惧",
+    text: "伴侣没有及时回复你的消息（超过3小时）。你的内心反应更接近？",
+    options: [
+      { text: "不会多想，他/她可能在忙", w: {abandonmentFear:0} },
+      { text: "会有点担心，但能控制", w: {abandonmentFear:1} },
+      { text: "会开始想'他/她是不是不爱我了'", w: {abandonmentFear:3} },
+      { text: "会感到极度焦虑，甚至会打电话/发消息轰炸", w: {abandonmentFear:4, control:2} }
+    ]
+  },
+  // 22. 分离焦虑
+  {
+    module: "被抛弃恐惧",
     text: "你和伴侣异地了一段时间，联系频率从每天减少到两三天一次。你感觉到的是？",
     options: [
-      { text: "理解，两个人都有自己的生活要顾", w: {abandonment:0, differentiation:2} },
-      { text: "能接受，但会主动和他/她提：希望我们保持一定的联系频率", w: {repair:2, abandonment:1} },
-      { text: "觉得有点被忽视，开始怀疑对方是否还在意这段关系", w: {abandonment:3, splitting:2} },
-      { text: "感到焦虑，开始更频繁地发消息来确认，甚至会查他/她的社交媒体", w: {abandonment:4, control:3, aggression:1} }
+      { text: "理解，两个人都有自己的生活要顾", w: {abandonmentFear:0, differentiation:2} },
+      { text: "能接受，但会主动和他/她提：希望我们保持一定的联系频率", w: {repair:2, abandonmentFear:1} },
+      { text: "觉得有点被忽视，开始怀疑对方是否还在意这段关系", w: {abandonmentFear:3, splitting:2} },
+      { text: "感到焦虑，开始更频繁地发消息来确认，甚至会查他/她的社交媒体", w: {abandonmentFear:4, control:3, aggression:1} }
     ]
   },
-  // 35
+
+  // ── 维度9：测试行为 ──
+  // 23. 主动测试
   {
-    module: "攻击模式",
-    text: "你很愤怒，但在这个场合发作不合适。你通常会怎么处理这种情绪？",
+    module: "测试行为",
+    text: "你和伴侣关系不太好的那段时间，你有没有过以下想法或行为？（选最接近的）",
     options: [
-      { text: "找一个合适的时间和地点，再把它说出来", w: {aggression:1, repair:2} },
-      { text: "努力压下去，可能之后就慢慢淡忘了", w: {shame:2, aggression:1} },
-      { text: "会有一些间接的方式流露出来，比如语气变冷", w: {aggression:2, shame:1} },
-      { text: "把它化成动力，用做事来发泄", w: {differentiation:1, shame:1} }
+      { text: "没有，我觉得直接沟通比'试探'更有用", w: {repair:2, control:0} },
+      { text: "曾经想过如果我'消失'一段时间，他/她会不会着急", w: {abandonmentFear:3, control:2} },
+      { text: "偶尔会故意慢回复，想看看他/她的反应", w: {control:2, aggression:1} },
+      { text: "有时候会说些重话来测试他/她到底有多在乎", w: {control:3, aggression:2, abandonment:2} }
     ]
   },
-  // 36
+
+  // ── 维度10：理想化-贬低波动 ──
+  // 24. 关系期待
+  {
+    module: "理想化-贬低",
+    text: "你认为一段长期关系中，哪种状态是最'正常'的？",
+    options: [
+      { text: "有平淡，有波折，两个人都在变化，但仍然选择在一起", w: {splitting:0, repair:2} },
+      { text: "保持最初的感觉，如果感觉变了，说明感情变淡了", w: {splitting:3, abandonment:2} },
+      { text: "相互理解，少争吵，能一起面对生活中的问题", w: {differentiation:2, repair:2} },
+      { text: "对方能持续让我感到被重视和特别", w: {control:2, splitting:2, abandonment:1} }
+    ]
+  },
+
+  // ── 维度11：镜映需求 ──
+  // 25. 认可需求
   {
     module: "镜映需求",
     text: "你费了很大心思策划了一次约会，但伴侣反应平淡，没有很感动的样子。你的感受？",
@@ -1093,29 +993,154 @@ const questions = [
       { text: "很失望，觉得他/她不珍惜，开始想这段关系是否值得", w: {splitting:3, abandonment:2} }
     ]
   },
-  // 37
+  // 26. 崇拜需求
   {
-    module: "脆弱性恐惧",
-    text: "你很需要对方，但说出'我需要你'让你感觉很难开口。这种困难更像哪种？",
+    module: "镜映需求",
+    text: "你做了一件对你来说很重要的事，但伴侣当天没有注意到，也没有主动问。你的感受是？",
     options: [
-      { text: "其实不难，这是很正常的表达", w: {shame:0} },
-      { text: "会说，但要想一想才能说出口", w: {shame:1} },
-      { text: "很难说，担心显得自己太软弱或者太依赖", w: {shame:3, differentiation:-1} },
-      { text: "几乎不会说，我更习惯用行动表达而不是语言", w: {shame:2, emotionalAvailability:1} }
+      { text: "会自己提起来分享，觉得告诉他/她是很自然的事", w: {shame:0, emotionalAvailability:2} },
+      { text: "有点失落，但不会主动说，等对方问起来", w: {splitting:1, shame:2} },
+      { text: "感到不被重视，甚至有点生气", w: {control:2, splitting:2, aggression:1} },
+      { text: "会开始怀疑他/她是否真的在乎我", w: {splitting:3, abandonmentFear:2, control:1} }
     ]
   },
-  // 38
+
+  // ── 维度12：对伴侣完美的期待 ──
+  // 27. 完美期待
   {
-    module: "关系维护",
-    text: "关系中最让你感到疲惫或者担心的事情，更接近哪种？",
+    module: "完美期待",
+    text: "伴侣做了一件让你很失望的事（不是原则性问题，比如忘了重要日子）。你的第一反应是？",
     options: [
-      { text: "担心对方哪天不再爱我了", w: {abandonment:3, splitting:1} },
-      { text: "担心两个人越来越不理解对方", w: {emotionalAvailability:2, repair:1} },
-      { text: "担心自己在这段关系里失去了自我", w: {differentiation:2, shame:1} },
-      { text: "担心自己伤害了对方却没有意识到", w: {repair:2, shame:1} }
+      { text: "会告诉他/她我有点失望，但不会太往心里去", w: {splitting:0, repair:1} },
+      { text: "会有点难过，但能理解他/她可能太忙了", w: {splitting:1, differentiation:1} },
+      { text: "会觉得他/她不够重视我，开始怀疑他/她是否真的爱我", w: {splitting:3, abandonment:2} },
+      { text: "会很生气，觉得他/她不应该犯这种错", w: {control:2, splitting:2} }
     ]
   },
-  // 39
+
+  // ── 混合维度题目 ──
+  // 28. 权力感知
+  {
+    module: "权力感知",
+    text: "在你们日常的决策中（比如去哪吃饭、怎么安排周末），通常是谁主导？",
+    options: [
+      { text: "大部分时候是对方，我比较随意", w: {control:0, differentiation:1} },
+      { text: "我们轮流来，或者一起商量", w: {control:0, differentiation:2} },
+      { text: "我更常提出方案，对方通常同意", w: {control:2} },
+      { text: "我比较在意这些细节，所以通常由我来决定", w: {control:3, differentiation:-1} }
+    ]
+  },
+  // 29. 边界感知
+  {
+    module: "边界感知",
+    text: "你发现你们两个在某个重要问题上有根本性的价值观差异（比如对生育、金钱的态度）。你会？",
+    options: [
+      { text: "认真谈一次，看看有没有办法达成共识", w: {repair:2, differentiation:1} },
+      { text: "觉得这是大问题，对关系的未来感到担忧", w: {abandonment:2, splitting:1} },
+      { text: "觉得只要感情好，这些以后慢慢磨合就行", w: {differentiation:1, splitting:1} },
+      { text: "希望对方能为了我们的关系调整他/她的想法，否则就是不够爱我", w: {control:4, differentiation:-1, splitting:1} }
+    ]
+  },
+  // 30. 亲密节奏
+  {
+    module: "亲密节奏",
+    text: "你觉得在亲密关系中，多久联系一次才是'正常'的？",
+    options: [
+      { text: "保持日常联系，但不需要时刻回应", w: {abandonmentFear:1, control:0} },
+      { text: "每天都应该主动联系，这是维系感情的方式", w: {abandonmentFear:2, control:1} },
+      { text: "不用固定，想联系就联系，不联系也没关系", w: {differentiation:2, abandonmentFear:0} },
+      { text: "对方应该更主动，主动联系是关心的表现，不主动就是不在乎", w: {control:3, abandonmentFear:3, splitting:1} }
+    ]
+  },
+  // 31. 情绪管理
+  {
+    module: "情绪管理",
+    text: "你心情很差，但原因很难解释，或者你自己也说不清楚。伴侣注意到了，问你'怎么了'。你会？",
+    options: [
+      { text: "说'我现在情绪不好，但不知道为什么，先给我点时间'", w: {shame:1, emotionalAvailability:2} },
+      { text: "说'没事'，然后自己慢慢消化", w: {shame:3, emotionalAvailability:0} },
+      { text: "会尝试解释，哪怕说得不清楚", w: {shame:0, emotionalAvailability:3} },
+      { text: "觉得被追问让我更烦，想一个人待着", w: {aggression:1, shame:2, differentiation:1} }
+    ]
+  },
+  // 32. 信任模式
+  {
+    module: "信任模式",
+    text: "你发现伴侣手机上有一个你不认识的异性名字，而且最近联系比较频繁。你会怎么做？",
+    options: [
+      { text: "直接问他/她是谁，觉得可以直接沟通", w: {control:1, repair:1} },
+      { text: "觉得不安，但会提醒自己不要乱想，先观察", w: {abandonmentFear:2, shame:1} },
+      { text: "想知道，但不会直接问，可能会从其他途径了解", w: {control:3, shame:2} },
+      { text: "觉得我们之间应该互相信任，不去追问", w: {differentiation:2, control:0} }
+    ]
+  },
+  // 33. 独立性边界
+  {
+    module: "独立性边界",
+    text: "伴侣有一个你不太了解、也不太喜欢的爱好，他/她花了不少时间在上面。你会？",
+    options: [
+      { text: "尊重他/她的兴趣，偶尔关心一下就好", w: {differentiation:2, control:0} },
+      { text: "试着了解一下，看看能不能也参与进来", w: {differentiation:1, emotionalAvailability:2} },
+      { text: "觉得花太多时间在上面挺没意思的，会表达我的看法", w: {control:2, differentiation:-1} },
+      { text: "担心这会占用我们在一起的时间，有些不安", w: {abandonmentFear:2, control:1} }
+    ]
+  },
+  // 34. 控制与关心
+  {
+    module: "控制与关心",
+    text: "你很在意伴侣的健康，他/她最近睡眠不好、饮食也不规律。你的应对方式是？",
+    options: [
+      { text: "关心地问问他/她，看看有没有什么我能帮到的", w: {emotionalAvailability:2, control:0} },
+      { text: "帮他/她安排好作息，告诉他/她应该怎么做", w: {control:3} },
+      { text: "提到一次，然后尊重他/她自己的选择", w: {differentiation:2, control:1} },
+      { text: "担心但不知道说什么，只是默默关注", w: {emotionalAvailability:1, shame:2} }
+    ]
+  },
+  // 35. 自我感知
+  {
+    module: "自我感知",
+    text: "你认为在亲密关系中，你更容易变成哪种状态？",
+    options: [
+      { text: "比较依赖对方，会很在意对方的反应和评价", w: {abandonmentFear:2, differentiation:-1} },
+      { text: "保持自我，但有时会因为担心对方而让步", w: {differentiation:1, shame:1} },
+      { text: "比较独立，可能有时候让对方觉得我不够需要他/她", w: {emotionalAvailability:1, differentiation:2} },
+      { text: "会不自觉地想主导或影响关系的走向", w: {control:3} }
+    ]
+  },
+  // 36. 修复能力
+  {
+    module: "修复能力",
+    text: "你和伴侣有一次严重争吵，两个人都说了很伤人的话。接下来的几天关系非常冷淡。这时候你会？",
+    options: [
+      { text: "主动打破僵局，可能是发一条消息或者做一件暖心的事", w: {repair:3, shame:1} },
+      { text: "等对方先开口，觉得这次自己委屈比较大", w: {control:1, repair:0} },
+      { text: "继续冷战，等时间来冲淡这件事", w: {repair:-2, aggression:1} },
+      { text: "很想和解，但不知道怎么开始，会有点焦虑", w: {repair:1, shame:2, abandonmentFear:1} }
+    ]
+  },
+  // 37. 情感节奏
+  {
+    module: "情感节奏",
+    text: "热恋之后，你们的关系进入了一段相对平淡的时期。你对这种平淡的感受是？",
+    options: [
+      { text: "觉得这是正常的，关系稳定下来了", w: {differentiation:2, splitting:0} },
+      { text: "有时会担心感情是不是在淡化", w: {abandonmentFear:2, splitting:1} },
+      { text: "觉得刺激少了，开始想主动制造一些新鲜感", w: {control:1, splitting:1} },
+      { text: "觉得平淡让我有些不安，不确定对方是否还在意", w: {abandonmentFear:3, splitting:2} }
+    ]
+  },
+  // 38. 压力反应
+  {
+    module: "压力反应",
+    text: "当你压力很大、状态很差的时候，你在关系中更容易出现哪种模式？",
+    options: [
+      { text: "需要更多来自对方的关心和陪伴", w: {abandonmentFear:2, emotionalAvailability:1} },
+      { text: "会变得比较沉默，不想给对方增加负担", w: {shame:3, emotionalAvailability:0} },
+      { text: "更容易被小事激怒，对对方不耐烦", w: {aggression:3, control:1} },
+      { text: "状态不好时更需要一个人待着恢复能量", w: {differentiation:2, shame:1} }
+    ]
+  },
+  // 39. 人格稳定性
   {
     module: "人格稳定性",
     text: "你在一段关系里，和单身时的自己相比，有没有明显的变化？",
@@ -1126,7 +1151,7 @@ const questions = [
       { text: "明显不一样，在关系里我会变得更敏感或者更焦虑", w: {abandonmentFear:2, splitting:1, differentiation:-1} }
     ]
   },
-  // 40
+  // 40. 长期视角
   {
     module: "长期视角",
     text: "你理想中的长期关系，最重要的核心是什么？",
