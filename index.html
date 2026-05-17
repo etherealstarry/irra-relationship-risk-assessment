@@ -782,7 +782,7 @@ const questions = [
       { text: "会自己提起来分享，觉得告诉他/她是很自然的事", w: {shame:0, emotionalAvailability:2} },
       { text: "有点失落，但不会主动说，等对方问起来", w: {splitting:1, shame:2} },
       { text: "感到不被重视，甚至有点生气", w: {control:2, splitting:2, aggression:1} },
-      { text: "没什么特别的感觉，这是我自己的事", w: {differentiation:2} }
+      { text: "会开始怀疑他/她是否真的在乎我", w: {splitting:3, abandonmentFear:2, control:1} }
     ]
   },
   // 9
@@ -815,7 +815,7 @@ const questions = [
       { text: "保持日常联系，但不需要时刻回应", w: {abandonmentFear:1, control:0} },
       { text: "每天都应该主动联系，这是维系感情的方式", w: {abandonmentFear:2, control:1} },
       { text: "不用固定，想联系就联系，不联系也没关系", w: {differentiation:2, abandonmentFear:0} },
-      { text: "对方应该更主动，主动联系是关心的表现", w: {control:2, abandonmentFear:2} }
+      { text: "对方应该更主动，主动联系是关心的表现，不主动就是不在乎", w: {control:3, abandonmentFear:3, splitting:1} }
     ]
   },
   // 12
@@ -835,9 +835,9 @@ const questions = [
     text: "你认为一段长期关系中，哪种状态是最'正常'的？",
     options: [
       { text: "有平淡，有波折，两个人都在变化，但仍然选择在一起", w: {splitting:0, repair:2} },
-      { text: "保持最初的感觉，如果感觉变了，说明感情变淡了", w: {splitting:2, abandonment:2} },
+      { text: "保持最初的感觉，如果感觉变了，说明感情变淡了", w: {splitting:3, abandonment:2} },
       { text: "相互理解，少争吵，能一起面对生活中的问题", w: {differentiation:2, repair:2} },
-      { text: "对方能持续让我感到被重视和特别", w: {control:1, splitting:1} }
+      { text: "对方能持续让我感到被重视和特别", w: {control:2, splitting:2, abandonment:1} }
     ]
   },
   // 14
@@ -881,7 +881,7 @@ const questions = [
       { text: "两个人都有问题，我们不合适", w: {differentiation:2, shame:1} },
       { text: "我当时做了一些让对方不舒服的事，对此我有责任", w: {repair:2, shame:1} },
       { text: "对方的问题更多，他/她不够珍惜这段关系", w: {splitting:2, control:1} },
-      { text: "时机不对，不是谁的错", w: {differentiation:1} }
+      { text: "我总是遇到不合适的人，可能我眼光有问题", w: {shame:3, splitting:1, externalAttribution:1} }
     ]
   },
   // 18
@@ -914,7 +914,7 @@ const questions = [
       { text: "认真谈一次，看看有没有办法达成共识", w: {repair:2, differentiation:1} },
       { text: "觉得这是大问题，对关系的未来感到担忧", w: {abandonment:2, splitting:1} },
       { text: "觉得只要感情好，这些以后慢慢磨合就行", w: {differentiation:1, splitting:1} },
-      { text: "希望对方能为了我们的关系调整他/她的想法", w: {control:3, differentiation:-1} }
+      { text: "希望对方能为了我们的关系调整他/她的想法，否则就是不够爱我", w: {control:4, differentiation:-1, splitting:1} }
     ]
   },
   // 21
@@ -1002,7 +1002,7 @@ const questions = [
       { text: "不会，一件事不代表一段关系", w: {splitting:0, differentiation:2} },
       { text: "有时候会，如果那件事触碰了某个我在意的点", w: {splitting:2, abandonment:1} },
       { text: "会，我会因为一件事开始重新审视整段关系", w: {splitting:3, abandonment:2} },
-      { text: "取决于事情的严重程度", w: {splitting:1, differentiation:1} }
+      { text: "会，而且一旦开始怀疑就很难停止", w: {splitting:4, abandonment:3, control:1} }
     ]
   },
   // 29
@@ -1055,9 +1055,9 @@ const questions = [
     text: "你对伴侣某个根深蒂固的习惯感到不满。经过多次沟通，他/她表示很难改变。你会？",
     options: [
       { text: "接受这是他/她的一部分，决定是否还要继续", w: {differentiation:2, splitting:0} },
-      { text: "觉得如果他/她不改，说明不够重视这段关系", w: {control:3, splitting:2} },
+      { text: "觉得如果他/她不改，说明不够重视这段关系，不够爱我", w: {control:4, splitting:2, abandonment:1} },
       { text: "感到失望，但还是会尝试接受", w: {splitting:1, repair:1} },
-      { text: "开始重新审视我们是否真的合适", w: {differentiation:2, splitting:1} }
+      { text: "开始重新审视我们是否真的合适，甚至考虑离开", w: {differentiation:2, splitting:2, abandonment:1} }
     ]
   },
   // 34
@@ -1068,7 +1068,7 @@ const questions = [
       { text: "理解，两个人都有自己的生活要顾", w: {abandonment:0, differentiation:2} },
       { text: "能接受，但会主动和他/她提：希望我们保持一定的联系频率", w: {repair:2, abandonment:1} },
       { text: "觉得有点被忽视，开始怀疑对方是否还在意这段关系", w: {abandonment:3, splitting:2} },
-      { text: "感到焦虑，开始更频繁地发消息来确认", w: {abandonment:3, control:2} }
+      { text: "感到焦虑，开始更频繁地发消息来确认，甚至会查他/她的社交媒体", w: {abandonment:4, control:3, aggression:1} }
     ]
   },
   // 35
@@ -1132,9 +1132,9 @@ const questions = [
     text: "你理想中的长期关系，最重要的核心是什么？",
     options: [
       { text: "两个人能一直保持真实的自己，又能真正理解对方", w: {differentiation:2, emotionalAvailability:2} },
-      { text: "对方能始终把我放在重要的位置", w: {abandonment:1, control:1} },
+      { text: "对方能始终把我放在重要的位置，永远不离开我", w: {abandonment:3, control:2, splitting:1} },
       { text: "我们能一起成长，彼此促进", w: {repair:2, differentiation:1} },
-      { text: "感情稳定，不出现大的裂痕", w: {abandonment:2, splitting:1} }
+      { text: "感情稳定，不出现大的裂痕，不吵架", w: {abandonment:2, splitting:2, shame:1} }
     ]
   }
 ];
@@ -1491,45 +1491,118 @@ function renderNarrative(norm, risk) {
 
 function renderConclusion(norm, risk) {
   let html = '';
-
+  
+  // Generate personalized analysis based on dimension scores
+  let personalizedInsights = [];
+  
+  // Control analysis
+  if (norm.control >= 60) {
+    personalizedInsights.push(`<strong>权力与控制模式</strong>：你在关系中有较强的主导倾向（得分 ${norm.control}/100）。这可能表现为需要影响对方的决策、习惯性"为对方好"式的介入，或者在意见不一致时很难真正放手。这种模式在早期关系中往往不明显，甚至会被体验为"有担当"，但在关系深入后，伴侣可能会开始感到空间受限。根据权力动态理论，当一方察觉到"对方已经离不开我了"时，控制欲往往会浮现。`);
+  } else if (norm.control >= 40) {
+    personalizedInsights.push(`<strong>权力与控制模式</strong>：你在关系中有一定的主导倾向（得分 ${norm.control}/100）。这可能表现为在某些决策上希望对方听从你的建议，或者在冲突中倾向于说服对方。这种模式需要觉察，特别是在关系进入稳定期后，权力动态可能会发生变化。`);
+  }
+  
+  // Shame analysis
+  if (norm.shame >= 60) {
+    personalizedInsights.push(`<strong>羞耻防御系统</strong>：你对脆弱和示弱有较强的防御（得分 ${norm.shame}/100）。根据羞耻动力学理论，大量亲密关系中的攻击性，本质是被激活的羞耻感的外部化。你可能很难在伴侣面前展现真实的脆弱，或者在出糗时感到强烈的不适。这种防御机制可能源于早期对"示弱=受伤"的学习，让你发展出一套保护机制。在亲密关系中，这会让真正的情感连接更难发生——你可能让伴侣感到"很近又很远"。`);
+  } else if (norm.shame >= 40) {
+    personalizedInsights.push(`<strong>羞耻防御系统</strong>：你有一定的羞耻防御倾向（得分 ${norm.shame}/100）。你能在一定程度上表达脆弱，但仍然会在某些时刻因为羞耻感而"关上"自己。这可能表现为情绪到了嘴边又咽回去，或者以玩笑消解本来认真的感受。这种模式是可以被觉察和调整的。`);
+  }
+  
+  // Abandonment fear analysis
+  if (norm.abandonmentFear >= 60) {
+    personalizedInsights.push(`<strong>被抛弃恐惧</strong>：你对于"失去"伴侣有较强的内在焦虑（得分 ${norm.abandonmentFear}/100）。这可能驱动你在关系中做出一些你自己也不完全认同的行为——比如频繁确认、试探对方、或者在感到威胁时先发制人地疏远。根据依恋理论，这种焦虑通常有更深的根源，和早期依恋经验密切相关，不是一段关系的问题，而是一个值得深入工作的内在议题。`);
+  } else if (norm.abandonmentFear >= 40) {
+    personalizedInsights.push(`<strong>被抛弃恐惧</strong>：你有时会在关系不稳定时感到不安（得分 ${norm.abandonmentFear}/100）。在压力期或关系进入"平淡期"后，这种焦虑可能会有所放大，关注自己在这些时刻的内在反应会很有帮助。`);
+  }
+  
+  // Aggression analysis
+  if (norm.aggression >= 60) {
+    personalizedInsights.push(`<strong>攻击模式</strong>：你在处理不满时倾向于外显或隐性的攻击（得分 ${norm.aggression}/100）。这可能表现为直接的言语攻击、摔门、大吼，或者间接的被动攻击——阴阳怪气、摆脸色、故意不回应。根据羞耻动力学理论，攻击性往往是羞耻感的外部化。当你感到羞耻或受伤时，攻击成为了一种保护机制。`);
+  } else if (norm.aggression >= 40) {
+    personalizedInsights.push(`<strong>攻击模式</strong>：你在某些情况下会表现出攻击性（得分 ${norm.aggression}/100）。这可能是在特定情境下的反应，但需要注意的是，攻击性往往会破坏关系中的安全感。觉察攻击背后的羞耻或恐惧，可以帮助你找到更健康的表达方式。`);
+  }
+  
+  // Splitting analysis
+  if (norm.splitting >= 60) {
+    personalizedInsights.push(`<strong>分裂倾向</strong>：你对伴侣的评价容易在"极好"和"极差"之间剧烈波动（得分 ${norm.splitting}/100）。根据客体关系理论，这种全好/全坏的认知模式，无法整合一个人的正面和负面特质。你可能在某个时刻觉得伴侣完美无缺，而在另一个时刻觉得他/她一无是处。这种波动会让伴侣感到困惑和不安，因为你无法给他/她一个稳定的"镜子"。`);
+  } else if (norm.splitting >= 40) {
+    personalizedInsights.push(`<strong>分裂倾向</strong>：你对伴侣的评价有一定的波动性（得分 ${norm.splitting}/100）。在某些时刻，你可能会因为一件事而对伴侣的整体评价发生较大变化。这种模式需要觉察，特别是在关系进入稳定期后，伴侣的缺点会逐渐显现，能否接受一个"有优点也有缺点"的人，是关系能否长久的关键。`);
+  }
+  
+  // Differentiation analysis
+  if (norm.differentiation <= 40) {
+    personalizedInsights.push(`<strong>自我分化</strong>：你在关系中保持独立自我的能力较弱（得分 ${norm.differentiation}/100）。根据Bowen的家庭系统理论，自我分化水平低的人，容易在关系中失去自我，完全融合到伴侣的期望和需求中。你可能发现自己在关系中变得越来越不像自己，或者为了维持关系而放弃自己的兴趣、朋友、甚至价值观。`);
+  } else if (norm.differentiation <= 60) {
+    personalizedInsights.push(`<strong>自我分化</strong>：你在关系中有一定的独立性（得分 ${norm.differentiation}/100），但仍有提升空间。你可能在某些时刻会为了关系而妥协自己的需求，或者在伴侣的情绪波动时感到被影响。提升自我分化水平，可以帮助你在关系中保持更稳定的自我感。`);
+  }
+  
+  // Emotional availability analysis
+  if (norm.emotionalAvailability <= 40) {
+    personalizedInsights.push(`<strong>情感可及性</strong>：你在情感上较难被触及（得分 ${norm.emotionalAvailability}/100）。伴侣可能会感到"你在，但又不在"——你可能很难真正"接住"伴侣的情感，或者在伴侣哭泣时感到不自在。根据情感忽视理论，这往往与早期情感忽视的经历有关，需要有意识地培养情感在场的能力。`);
+  } else if (norm.emotionalAvailability <= 60) {
+    personalizedInsights.push(`<strong>情感可及性</strong>：你有情感回应的意愿（得分 ${norm.emotionalAvailability}/100），但在某些情境下会感到不知所措。你可能习惯用"给建议"或"转移话题"来应对伴侣的情绪，而不是单纯地陪伴。这很常见，也是可以有意识地练习的。`);
+  }
+  
+  // Repair analysis
+  if (norm.repair <= 40) {
+    personalizedInsights.push(`<strong>修复能力</strong>：你在冲突或伤害后主动修复关系的能力较弱（得分 ${norm.repair}/100）。你可能倾向于等对方先道歉，或者让时间冲淡问题，而不是主动面对和解决。长期来看，修复的时机越晚，代价往往越大。尝试找到一种对你来说"低门槛"的修复方式会很有帮助。`);
+  } else if (norm.repair <= 60) {
+    personalizedInsights.push(`<strong>修复能力</strong>：你有修复意愿（得分 ${norm.repair}/100），但有时会因为自尊、委屈或不知道如何开口而延迟行动。这很人性，但长期来看，修复的时机越晚，代价往往越大。`);
+  }
+  
+  // Generate conclusion based on risk level
   if (risk <= 22) {
     html = `
-      <p><strong style="color:var(--cream)">综合指数 0–22：低风险结构 / 心理弹性区间</strong></p>
+      <p><strong style="color:var(--cream)">综合指数 ${risk}：低风险结构 / 心理弹性区间</strong></p>
       <p>你的测评结果显示，在当前这个时间节点，你在亲密关系中具备相对健全的心理资源。你能够在不完全失去自我的情况下进入亲密关系，对伴侣的独立性有较高的耐受度，修复能力和情感可及性均处于良好水平。</p>
       <p>这并不意味着你的关系不会遇到挑战——没有人是"零风险"的。关系本身就是一个持续激活两个人内部模式的容器。你目前的结构表明，当压力和深度绑定到来时，你有相对好的基础去应对，但仍然需要持续的自我觉察，尤其是在关系的2–3年后，当"创伤人格层"开始逐渐浮现的时候。</p>
+      <p>根据关系阶段人格退行模型，人格不是固定暴露的，而是随着关系阶段逐渐解锁。暧昧期展示的是理想化人格，热恋期是依附人格，稳定期是权力人格，深度绑定期才是创伤人格。你目前的低风险结构可能意味着你的创伤人格层尚未被激活，或者你已经具备了较好的整合能力。</p>
       <p>值得继续关注的是：你是否有某些被压抑的部分尚未真正在关系中暴露？低风险结构有时也可能来自"关系还没有足够深入"。真正的压力测试往往在深度绑定之后才开始。</p>
     `;
   } else if (risk <= 42) {
     html = `
-      <p><strong style="color:var(--cream)">综合指数 23–42：轻度风险结构 / 觉察关键期</strong></p>
+      <p><strong style="color:var(--cream)">综合指数 ${risk}：轻度风险结构 / 觉察关键期</strong></p>
       <p>你的结果显示出一些值得关注的结构性模式，但整体来看，你具备足够的心理弹性和自我觉察能力来处理它们。这个分数段的人往往是"知道自己有些问题，但还没有完全解锁它们"——你能意识到一些惯性，但在情绪激动的时刻仍然会被带走。</p>
       <p>你最需要关注的，是那些在日常中不太显眼、但在深度绑定后会逐渐放大的模式：也许是羞耻防御让你很难真正展现脆弱；也许是对被抛弃的隐性焦虑会让你在某些时刻做出一些让自己事后后悔的反应；也许是你的修复意愿有时会输给自尊或等待。</p>
+      <p>根据依恋理论，依恋模式只有在"真正亲密"后才会被激活——前两年很多关系还停留在"互相做客"阶段。你目前的轻度风险结构可能意味着你的依恋模式尚未被完全激活，或者你已经具备了较好的觉察能力。</p>
       <p>好消息是：这个阶段的人通常对反馈是开放的，也有能力从觉察走向改变。心理咨询、关系教育，或者仅仅是找一个能真正说话的伴侣，都是有效的路径。</p>
     `;
   } else if (risk <= 62) {
     html = `
-      <p><strong style="color:var(--cream)">综合指数 43–62：中度风险结构 / 深层模式激活区</strong></p>
+      <p><strong style="color:var(--cream)">综合指数 ${risk}：中度风险结构 / 深层模式激活区</strong></p>
       <p>你的测评结果提示，你在亲密关系的深入期——通常是关系的第2到4年——可能会遭遇明显的人格模式激活。这不是说你"有问题"，而是说你内在有一些早年形成的结构，它们在关系足够深、防御足够低的时候，会开始主导你的反应。</p>
       <p>可能的表现包括：伴侣开始说"我不知道你为什么突然变了"；或者你发现自己在关系中越来越容易感到受困或愤怒；或者你和伴侣的关系开始出现某种令双方都感到困惑的循环。</p>
+      <p>根据关系阶段人格退行模型，中度风险结构的人往往在稳定期（1-2年）开始显现问题，而在深度绑定期（2-3年）问题变得明显。你可能正处于或即将进入这个阶段。</p>
       <p>中度风险结构的人往往有一个共同点：外部功能正常甚至优秀，但在"被真正看见"的时刻会感到强烈的不适。这个不适本身是重要的入口——它指向你最需要工作的内在区域。</p>
       <p>这个阶段强烈建议寻求专业心理支持，不是因为你"出了问题"，而是因为你已经到了一个深度工作能带来真实改变的时机。</p>
     `;
   } else if (risk <= 80) {
     html = `
-      <p><strong style="color:var(--cream)">综合指数 63–80：较高风险结构 / 结构性工作必要期</strong></p>
+      <p><strong style="color:var(--cream)">综合指数 ${risk}：较高风险结构 / 结构性工作必要期</strong></p>
       <p>你的测评结果显示出较为明显的风险结构，这些结构在关系深入后可能对伴侣造成持续性的心理影响，同时也可能让你自己陷入关系的反复循环中——每段关系似乎都走向同样的结局，或者在关系中反复经历某些强烈但令自己不舒服的感受。</p>
       <p>这个分数段的人往往有较强的内部矛盾：一方面渴望真正的亲密，另一方面又在亲密真正到来的时候感到威胁、后退、或者转化为控制和攻击。这种矛盾不是性格缺陷，而是早期依恋经验和羞耻动力学共同作用的结果。</p>
+      <p>根据弗洛伊德的强迫性重复理论，童年经历过情感忽视、抛弃或虐待的人，会无意识地选择与早期创伤相似的伴侣，试图在新的关系中"修复"旧的创伤。这就是为什么有些人反复选择同一类型的"坏伴侣"——不是因为他们不知道对方有问题，而是因为那种"熟悉的感觉"让他们误以为是"爱"。</p>
       <p>重要的是：这些模式不是"你这个人"，它们是你早年发展出来的生存策略。它们曾经有用，但现在可能正在阻止你获得你真正渴望的亲密。改变是可能的，但它需要结构性的支持——不只是"想清楚"，而是在安全的容器里真正重新体验和整合那些早年未完成的部分。</p>
       <p>请认真考虑寻求长期的心理咨询支持，这不是"最后手段"，而是对自己和你爱的人最负责任的选择。</p>
     `;
   } else {
     html = `
-      <p><strong style="color:var(--cream)">综合指数 81–100：高风险结构 / 深度工作紧迫期</strong></p>
+      <p><strong style="color:var(--cream)">综合指数 ${risk}：高风险结构 / 深度工作紧迫期</strong></p>
       <p>你的测评结果显示出多个维度的高风险信号集中叠加。这意味着你在亲密关系中面临的挑战不只是"某个习惯需要改变"，而是涉及更深层的人格结构和依恋模式。</p>
       <p>这个结构下的人在关系中往往会经历以下一种或多种：对伴侣造成持续性的心理伤害（即使这不是你的本意）；或者反复成为受害者（因为"熟悉的痛苦"比"陌生的平静"更能激活你的内部工作模型）；或者两者交替出现。这是弗洛伊德所说的"强迫性重复"的典型形态。</p>
+      <p>根据创伤性联结理论，施害者通过间歇性的"好-坏"交替，让受害者产生强烈的情感依赖。如果你发现自己在关系中反复经历"虐待-补偿-甜蜜"的循环，这可能是一个重要的信号。</p>
       <p>这个结果不是判决，而是一面镜子。很多有类似结构的人，通过持续的专业工作，能够真正重建自己的内在模型，进入不同质地的关系。这需要时间，需要一个足够安全的治疗空间，以及你真正愿意让自己被看见的勇气。</p>
       <p>如果你目前正在一段关系中，请认真评估这段关系对双方的影响。如果你正在考虑进入一段新的关系，建议先给自己一段专注于内在工作的时间。你值得一段不需要用旧的模式去维系的关系，但它需要你先做一些自己的工作。</p>
     `;
+  }
+  
+  // Add personalized insights if any
+  if (personalizedInsights.length > 0) {
+    html += `<div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border)">
+      <p><strong style="color:var(--cream)">你的个性化分析</strong></p>
+      ${personalizedInsights.map(insight => `<p style="margin-top:16px">${insight}</p>`).join('')}
+    </div>`;
   }
 
   document.getElementById('conclusionBox').innerHTML = html;
