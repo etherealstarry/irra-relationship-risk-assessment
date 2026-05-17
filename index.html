@@ -1536,7 +1536,7 @@ function renderConclusion(norm, risk) {
 }
 
 // ── SUBMIT & SHARE ────────────────────────────────────────────────────────
-const APPS_SCRIPT_URL = 'GOOGLE_APPS_SCRIPT_URL_PLACEHOLDER';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytlNAKhVbNpUK36WK0xbFyiSv1qtyYaX5D49OyAfGOfXAyU98TKLP8gFEu-EmvdL8/exec';
 
 function submitResult() {
   const { raw, norm } = computeScores();
@@ -1561,7 +1561,7 @@ function submitResult() {
   document.getElementById('shareLink').style.display = 'block';
   
   // Also submit to Google Sheets if URL is configured
-  if (APPS_SCRIPT_URL !== 'GOOGLE_APPS_SCRIPT_URL_PLACEHOLDER') {
+  if (APPS_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbytlNAKhVbNpUK36WK0xbFyiSv1qtyYaX5D49OyAfGOfXAyU98TKLP8gFEu-EmvdL8/exec') {
     fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
